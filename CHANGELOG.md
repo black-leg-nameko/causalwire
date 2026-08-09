@@ -19,6 +19,3 @@ All notable changes are documented here. This project follows [Semantic Versioni
 ### Security
 
 - Exclusive journal/output creation, symlink refusal, bounded frames/journals, shell-free child spawn, escaped HTML/SVG, and no default network telemetry.
-
-[Unreleased]: https://github.com/black-leg-nameko/causalwire/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/black-leg-nameko/causalwire/releases/tag/v0.1.0

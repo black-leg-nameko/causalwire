@@ -18,6 +18,11 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2
         with:
-          # Product Hunt and X policy pages return 403 to non-browser clients; 404/5xx still fail.
-          args: --verbose --no-progress --accept 200,403,429 "**/*.md"
+          # Product Hunt and X policy pages return 403 to non-browser clients.
+          # The excluded 404s are intentional name-availability evidence in THESIS.md.
+          args: >-
+            --verbose --no-progress --accept 200,403,429
+            --exclude '^https://api\.github\.com/users/(causalloom|causalspan|causalwire|wirelineage)$'
+            --exclude '^https://pubapi\.registry\.google/rdap/domain/(causalloom|causalspan|causalwire|wirelineage)\.dev$'
+            "**/*.md"
           fail: true
