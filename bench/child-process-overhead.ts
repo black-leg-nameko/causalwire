@@ -5,9 +5,9 @@ import { cpus, platform, release, tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { performance } from 'node:perf_hooks';
 
-const warmup = 30;
-const measured = 300;
-const runs = 3;
+const warmup = 200;
+const measured = 2_000;
+const runs = 5;
 const sizes = [1024, 16 * 1024, 256 * 1024];
 const labels = ['1KiB', '16KiB', '256KiB'];
 const echoProgram = 'process.stdin.pipe(process.stdout)';

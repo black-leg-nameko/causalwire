@@ -16,7 +16,7 @@ export class FrameDecoder {
     this.totalBytes += segment.length;
     const remaining = Math.max(0, this.maxBytes + 1 - this.retainedBytes);
     if (remaining) {
-      const retained = Buffer.from(segment.subarray(0, remaining));
+      const retained = segment.subarray(0, remaining);
       this.parts.push(retained);
       this.retainedBytes += retained.length;
     }
@@ -24,7 +24,7 @@ export class FrameDecoder {
 
   private finish(): DecodedFrame {
     const result = {
-      bytes: Buffer.concat(this.parts, this.retainedBytes),
+      bytes: this.parts.length === 1 ? this.parts[0] : Buffer.concat(this.parts, this.retainedBytes),
       parseStatus: this.totalBytes > this.maxBytes ? 'oversized' as const : 'candidate' as const,
       totalBytes: this.totalBytes,
       sha256: this.hash.digest('hex'),

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-09T23:15:13.305Z",
+  "generatedAt": "2026-08-09T23:40:55.138Z",
   "method": "sequential newline exchange, direct OS child echo vs dist CLI record wrapper; one in-flight frame at a time",
   "conditions": {
-    "warmup": 30,
-    "measured": 300,
-    "runs": 3,
+    "warmup": 200,
+    "measured": 2000,
+    "runs": 5,
     "payloadMix": "80% 1KiB, 15% 16KiB, 5% 256KiB",
     "content": "off"
   },
@@ -16,33 +16,33 @@
   "buckets": [
     {
       "bucket": "1KiB",
-      "count": 720,
-      "baselineP95Ms": 0.3603800000000206,
-      "causalwireP95Ms": 1.0541450000000623,
-      "incrementalP95Ms": 0.6937650000000417,
-      "baselineP99Ms": 0.9464540000001307,
-      "causalwireP99Ms": 1.4069229999995514
+      "count": 8000,
+      "baselineP95Ms": 0.3827469999996538,
+      "causalwireP95Ms": 0.9567869999991672,
+      "incrementalP95Ms": 0.5740399999995134,
+      "baselineP99Ms": 1.008918999999878,
+      "causalwireP99Ms": 2.2851489999998194
     },
     {
       "bucket": "16KiB",
-      "count": 135,
-      "baselineP95Ms": 0.7107690000000275,
-      "causalwireP95Ms": 1.5586540000000468,
-      "incrementalP95Ms": 0.8478850000000193,
-      "baselineP99Ms": 1.1063809999998284,
-      "causalwireP99Ms": 2.4463519999999335
+      "count": 1500,
+      "baselineP95Ms": 0.5117229999999608,
+      "causalwireP95Ms": 1.5063759999993636,
+      "incrementalP95Ms": 0.9946529999994027,
+      "baselineP99Ms": 1.101835000000051,
+      "causalwireP99Ms": 4.224737999998979
     },
     {
       "bucket": "256KiB",
-      "count": 45,
-      "baselineP95Ms": 2.099132999999995,
-      "causalwireP95Ms": 6.617495999999846,
-      "incrementalP95Ms": 4.518362999999852,
-      "baselineP99Ms": 3.781878000000006,
-      "causalwireP99Ms": 9.134545000000003
+      "count": 500,
+      "baselineP95Ms": 2.474366000000373,
+      "causalwireP95Ms": 6.680929000000106,
+      "incrementalP95Ms": 4.206562999999733,
+      "baselineP99Ms": 6.2434919999996055,
+      "causalwireP99Ms": 16.029698000000053
     }
   ],
-  "maxIncrementalP95Ms": 4.518362999999852,
+  "maxIncrementalP95Ms": 4.206562999999733,
   "byteMismatch": 0,
   "pass": true,
   "claimBoundary": "Measures a local packaged child-process echo path. It excludes remote MCP/tool/network latency and is cross-platform evidence only on runners that execute it.",

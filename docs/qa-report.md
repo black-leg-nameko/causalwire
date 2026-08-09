@@ -39,7 +39,7 @@ Machine-readable browser evidence is in `artifacts/reports/browser-qa.json`. Scr
 - Conformance: 2 harness tests over 20 ground-truth failures + 4 controls; 20/20 exact first-break code/sequence/node.
 - Security: 2 tests; privacy marker occurrences 0 across default-off metadata/HTML/SVG/OTLP, injection escaped, self-contained artifacts.
 - Shadow benchmark: 5 runs × (200 warmup + 2,000 measured), 80/15/5% payload mix; latest max incremental p95 2.402ms; mismatch/drop/reorder 0.
-- Packaged child benchmark: 3 runs × (30 warmup + 300 measured), 80/15/5% payload mix; latest max incremental p95 4.518ms; byte mismatch 0.
+- Packaged child benchmark: 5 runs × (200 warmup + 2,000 measured), 80/15/5% payload mix; latest max incremental p95 4.207ms; byte mismatch 0.
 
 ## Release-gate status after repository/security hardening
 

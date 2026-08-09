@@ -49,7 +49,7 @@ The initial audience is global, English-first MCP server/platform engineers. The
 | `corepack pnpm test:conformance` | PASS — 20/20 exact seeded failures plus controls |
 | `corepack pnpm test:security` | PASS — default-off privacy and self-contained injection boundaries |
 | `corepack pnpm bench:capture` | PASS — max incremental p95 2.402 ms; mismatch/drop/reorder 0/0/0 on local Linux/Node 22 |
-| `corepack pnpm bench:child` | PASS — packaged child path max incremental p95 4.518 ms; byte mismatch 0 on local Linux/Node 22 |
+| `corepack pnpm bench:child` | PASS — packaged child path max incremental p95 4.207 ms; byte mismatch 0 on local Linux/Node 22 |
 | `corepack pnpm pack:artifact && corepack pnpm smoke:pack` | PASS — 16-file, 115.0 kB tarball; seven core commands; privacy marker occurrences 0 |
 | `gitleaks git . --redact` | PASS — zero commits and zero history leaks |
 | `gitleaks dir . --redact` | PASS — complete working tree scanned (over 618 kB), zero leaks |

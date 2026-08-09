@@ -69,7 +69,7 @@ Current local Gate C evidence is green, but the cross-platform external matrix a
 - Content capture is off by default; the journal still contains potentially sensitive metadata, hashes, sizes, method/tool names, and timing.
 - It detects defined wire-verifiable JSON-RPC failures and reports the earliest such break.
 - It creates terminal, standalone HTML/SVG, offline OTLP JSON, and explicitly configured OTLP/HTTP outputs from the same normalized graph.
-- Local Linux/Node 22 evidence: 20/20 exact seeded conformance cases; 2.402 ms maximum incremental p95 shadow-path overhead; 4.518 ms child-process overhead; zero measured byte mismatch in their documented fixtures. Always link the benchmark conditions.
+- Local Linux/Node 22 evidence: 20/20 exact seeded conformance cases; 2.402 ms maximum incremental p95 shadow-path overhead; 4.207 ms child-process overhead; zero measured byte mismatch in their documented fixtures. Always link the benchmark conditions.
 - No account, cloud backend, Docker, API key, or analytics connection is required for the demo.
 
 ### Claims prohibited or qualified

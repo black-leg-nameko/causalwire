@@ -48,7 +48,7 @@ export async function recordChild(options: RecordChildOptions): Promise<RecordRe
     const decoded = end ? decoders[direction].end() : decoders[direction].push(chunk);
     for (const item of decoded) {
       try {
-        const meta = inspectFrame(item.bytes, content, salt, proto, item.parseStatus === 'oversized' ? { bytes: item.totalBytes, sha256: item.sha256 } : undefined);
+        const meta = inspectFrame(item.bytes, content, salt, proto, item.parseStatus === 'oversized' ? { bytes: item.totalBytes, sha256: item.sha256 } : undefined, item.sha256);
         const wire = record('wire', { direction, ...meta }); writer.append(wire, 4096); frames++;
         if (meta.frame.parse_status !== 'ok') writer.append(record('capture_diagnostic', { code: 'D001', severity: 'error', at_seq: wire.seq, message_key: String(meta.frame.parse_status) }), 4096);
         const matched = correlator.accept(wire);

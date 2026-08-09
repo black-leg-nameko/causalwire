@@ -28,8 +28,8 @@ export interface FrameMetadata {
   protocol: ProtocolInfo;
 }
 
-export function inspectFrame(bytes: Buffer, content: 'off' | 'full', salt: Buffer, protocol: ProtocolInfo, oversized?: { bytes: number; sha256: string }): FrameMetadata {
-  const frame: Record<string, unknown> = { bytes: oversized?.bytes ?? bytes.length, sha256: oversized?.sha256 ?? sha(bytes), encoding: 'utf8', parse_status: 'ok' };
+export function inspectFrame(bytes: Buffer, content: 'off' | 'full', salt: Buffer, protocol: ProtocolInfo, oversized?: { bytes: number; sha256: string }, precomputedSha256?: string): FrameMetadata {
+  const frame: Record<string, unknown> = { bytes: oversized?.bytes ?? bytes.length, sha256: oversized?.sha256 ?? precomputedSha256 ?? sha(bytes), encoding: 'utf8', parse_status: 'ok' };
   if (oversized) {
     frame.parse_status = 'oversized';
     return { frame, rpc: { type: 'unknown' }, protocol };

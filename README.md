@@ -108,7 +108,7 @@ Current local evidence:
 
 - Seeded failure accuracy: **20/20 exact code + source sequence + node (100%)** across five fault families. Controls are excluded from the denominator. See [`artifacts/reports/accuracy.md`](artifacts/reports/accuracy.md).
 - Capture shadow-path benchmark: **2.402 ms maximum incremental p95**, byte mismatch/drop/reorder **0/0/0**, on Linux WSL2, Node 22.23.1, Intel i7-1165G7. See [`artifacts/reports/capture-overhead.md`](artifacts/reports/capture-overhead.md).
-- Packaged child-process benchmark: **4.518 ms maximum incremental p95**, byte mismatch **0**, on the same local Linux/Node 22 host. See [`artifacts/reports/child-process-overhead.md`](artifacts/reports/child-process-overhead.md).
+- Packaged child-process benchmark: **4.207 ms maximum incremental p95**, byte mismatch **0**, on the same local Linux/Node 22 host. See [`artifacts/reports/child-process-overhead.md`](artifacts/reports/child-process-overhead.md).
 - Browser QA: Chromium at 1280/768/375 px, success and empty states, zero console errors or failed requests. See [`docs/qa-report.md`](docs/qa-report.md).
 
 The shadow benchmark is an alternating in-process immediate-echo measurement, and the packaged benchmark is a sequential local OS-child echo path. Neither measures remote MCP/tool latency. Node 20/22/24 × Linux/macOS/Windows runs are configured in CI; they become cross-platform evidence only after the public workflow completes successfully.
