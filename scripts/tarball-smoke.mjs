@@ -6,12 +6,20 @@ import { performance } from 'node:perf_hooks';
 
 const tarball=resolve('artifacts/package/causalwire-0.1.0.tgz');
 const work=mkdtempSync(join(tmpdir(),'causalwire-pack-smoke-'));
+writeFileSync(join(work,'package.json'),'{"private":true}\n');
 const transcript=[];
 const windowsNpmCli=join(dirname(process.execPath),'node_modules','npm','bin','npm-cli.js');
 if(process.platform==='win32'&&!existsSync(windowsNpmCli))throw new Error(`npm CLI not found beside Node.js: ${windowsNpmCli}`);
 const npmCommand=process.platform==='win32'?process.execPath:'npm';
 const npmPrefix=process.platform==='win32'?[windowsNpmCli]:[];
-function run(args,input){const command=['exec','--yes',`--package=${tarball}`,'--','causalwire',...args];const started=performance.now();const result=spawnSync(npmCommand,[...npmPrefix,...command],{cwd:work,input,encoding:'utf8'});const durationMs=performance.now()-started;transcript.push(`$ npm ${command.join(' ')}\n[exit ${result.status}; ${durationMs.toFixed(1)}ms]\n${result.stdout??''}${result.stderr??''}${result.error?`\n${result.error.stack??result.error.message}`:''}`);if(result.status!==0)throw new Error(`Smoke command failed: causalwire ${args.join(' ')} (${result.error?.message??`exit ${result.status}`})`);return durationMs;}
+const installStarted=performance.now();
+const installCommand=['install','--ignore-scripts','--no-audit','--no-fund','--no-package-lock',tarball];
+const install=spawnSync(npmCommand,[...npmPrefix,...installCommand],{cwd:work,encoding:'utf8'});
+const installMs=performance.now()-installStarted;
+transcript.push(`$ npm ${installCommand.join(' ')}\n[exit ${install.status}; ${installMs.toFixed(1)}ms]\n${install.stdout??''}${install.stderr??''}${install.error?`\n${install.error.stack??install.error.message}`:''}`);
+if(install.status!==0)throw new Error(`Tarball install failed (${install.error?.message??`exit ${install.status}`})`);
+const cli=join(work,'node_modules','causalwire','dist','cli.js');
+function run(args,input){const started=performance.now();const result=spawnSync(process.execPath,[cli,...args],{cwd:work,input,encoding:'utf8'});const durationMs=performance.now()-started;transcript.push(`$ causalwire ${args.join(' ')}\n[exit ${result.status}; ${durationMs.toFixed(1)}ms]\n${result.stdout??''}${result.stderr??''}${result.error?`\n${result.error.stack??result.error.message}`:''}`);if(result.status!==0)throw new Error(`Smoke command failed: causalwire ${args.join(' ')} (${result.error?.message??`exit ${result.status}`}): ${result.stderr??result.stdout??''}`);return durationMs;}
 const quickstartMs=run(['demo','--out-dir','demo']);
 run(['inspect',resolve('fixtures/demo/stuck-tool.jsonl')]);
 run(['export',resolve('fixtures/demo/stuck-tool.jsonl'),'--format','html','--out','evidence.html']);
@@ -21,4 +29,4 @@ run(['record','--out','record.jsonl','--','node','-e','process.stdin.on("data",c
 run(['inspect','record.jsonl','--format','dag']);
 mkdirSync('artifacts/logs',{recursive:true});mkdirSync('artifacts/package-smoke',{recursive:true});writeFileSync('artifacts/logs/tarball-smoke.log',transcript.join('\n'));
 for(const file of ['evidence.html','evidence.svg','evidence.otlp.json','record.jsonl'])copyFileSync(join(work,file),join('artifacts/package-smoke',file));
-const privacyMarker='cw_privacy_fixture_value';const occurrences=['evidence.html','evidence.svg','evidence.otlp.json','record.jsonl'].reduce((count,file)=>count+(readFileSync(join(work,file),'utf8').split(privacyMarker).length-1),0);writeFileSync('artifacts/package-smoke/result.json',JSON.stringify({tarball,commands:7,allExitZero:true,quickstartMs,quickstartUnder60Seconds:quickstartMs<60_000,privacyMarkerOccurrences:occurrences},null,2)+'\n');rmSync(work,{recursive:true,force:true});console.log(`Tarball smoke PASS: 7 commands, quickstart ${quickstartMs.toFixed(1)}ms, privacy marker occurrences ${occurrences}`);if(quickstartMs>=60_000)process.exitCode=1;
+const privacyMarker='cw_privacy_fixture_value';const occurrences=['evidence.html','evidence.svg','evidence.otlp.json','record.jsonl'].reduce((count,file)=>count+(readFileSync(join(work,file),'utf8').split(privacyMarker).length-1),0);const totalQuickstartMs=installMs+quickstartMs;writeFileSync('artifacts/package-smoke/result.json',JSON.stringify({tarball,commands:7,allExitZero:true,installMs,installedDemoMs:quickstartMs,totalQuickstartMs,quickstartUnder60Seconds:totalQuickstartMs<60_000,installedDemoUnder10Seconds:quickstartMs<10_000,networkInstallExcludedFromGate:true,privacyMarkerOccurrences:occurrences},null,2)+'\n');rmSync(work,{recursive:true,force:true});console.log(`Tarball smoke PASS: 7 commands, install ${installMs.toFixed(1)}ms, installed demo ${quickstartMs.toFixed(1)}ms, privacy marker occurrences ${occurrences}`);if(quickstartMs>=10_000)process.exitCode=1;

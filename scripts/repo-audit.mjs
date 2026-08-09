@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
-import { extname, join, resolve } from 'node:path';
+import { dirname, extname, join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const checks = [];
@@ -14,7 +14,7 @@ const required = [
 for (const file of required) note(`required:${file}`, existsSync(file), existsSync(file) ? 'present' : 'missing');
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
-note('license-consistency', pkg.license === 'Apache-2.0' && readFileSync('LICENSE', 'utf8').includes('Apache License\n                           Version 2.0'), `package=${pkg.license}`);
+note('license-consistency', pkg.license === 'Apache-2.0' && readFileSync('LICENSE', 'utf8').replaceAll('\r\n', '\n').includes('Apache License\n                           Version 2.0'), `package=${pkg.license}`);
 note('publish-provenance', pkg.publishConfig?.provenance === true && pkg.publishConfig?.access === 'public', JSON.stringify(pkg.publishConfig));
 note('supported-node', pkg.engines?.node === '>=20', pkg.engines?.node ?? 'missing');
 note('package-manager-pinned', /^pnpm@\d+\.\d+\.\d+$/.test(pkg.packageManager ?? ''), pkg.packageManager ?? 'missing');
@@ -32,9 +32,9 @@ function filesIn(directory, output = []) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     if (['.git', 'node_modules', 'dist'].includes(entry.name)) continue;
     const path = join(directory, entry.name);
-    if (entry.isSymbolicLink()) output.push(path);
+    if (entry.isSymbolicLink()) output.push(path.replaceAll('\\', '/'));
     else if (entry.isDirectory()) filesIn(path, output);
-    else output.push(path);
+    else output.push(path.replaceAll('\\', '/'));
   }
   return output;
 }
@@ -67,13 +67,16 @@ for (const file of allFiles.filter((item) => extname(item) === '.md')) {
     if (/^(?:https?:|mailto:|#)/.test(raw)) continue;
     const target = decodeURIComponent(raw.split('#')[0]);
     if (!target) continue;
-    const absolute = resolve(file.includes('/') ? join(file, '..') : '.', target);
+    const absolute = resolve(dirname(file), target);
     if (!existsSync(absolute)) localLinkFailures.push(`${file} -> ${raw}`);
   }
 }
 note('local-markdown-links', localLinkFailures.length === 0, localLinkFailures.length ? localLinkFailures.join(', ') : 'all local targets exist');
 
-const dry = spawnSync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], { encoding: 'utf8', maxBuffer: 10 * 1024 * 1024 });
+const windowsNpmCli = join(dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js');
+const npmCommand = process.platform === 'win32' ? process.execPath : 'npm';
+const npmPrefix = process.platform === 'win32' ? [windowsNpmCli] : [];
+const dry = spawnSync(npmCommand, [...npmPrefix, 'pack', '--dry-run', '--json', '--ignore-scripts'], { encoding: 'utf8', maxBuffer: 10 * 1024 * 1024 });
 let pack = null;
 try { pack = JSON.parse(dry.stdout)[0]; } catch { /* recorded below */ }
 note('npm-pack-dry-run', dry.status === 0 && Boolean(pack), dry.status === 0 ? `${pack?.entryCount} files; ${pack?.size} bytes` : dry.stderr || dry.stdout);
