@@ -1,0 +1,10 @@
+export type { JournalRecord } from './schema/journal-v1.js';
+export type { GraphV1, Diagnostic, NormalizerPack, DiagnosticDetector, GraphRenderer, OtlpMapper } from './schema/graph-v1.js';
+export type { RecordChildOptions, RecordResult } from './capture/child-process-wrapper.js';
+export type { AnalyzeOptions } from './normalize/pipeline.js';
+export type { OtlpOptions, ExportResult } from './export/otlp.js';
+export { recordChild } from './capture/child-process-wrapper.js';
+export { readJournal, analyzeJournal } from './normalize/pipeline.js';
+export { renderHtml } from './render/html.js';
+export { renderSvg } from './render/svg.js';
+export { toOtlp, mapOtlp } from './export/otlp.js';

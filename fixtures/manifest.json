@@ -1,0 +1,271 @@
+{
+  "schema": "causalwire.fixtures/v1",
+  "failureCases": 20,
+  "controlCases": 4,
+  "cases": [
+    {
+      "caseId": "malformed-01",
+      "family": "malformed",
+      "fixture": "conformance/malformed-01.jsonl",
+      "expectedFirstDiagnosticCode": "D001",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "duplicate-01",
+      "family": "duplicate",
+      "fixture": "conformance/duplicate-01.jsonl",
+      "expectedFirstDiagnosticCode": "D002",
+      "expectedSourceSeq": 2,
+      "expectedNodeId": "wire:2",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "orphan-response-01",
+      "family": "orphan-response",
+      "fixture": "conformance/orphan-response-01.jsonl",
+      "expectedFirstDiagnosticCode": "D003",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "missing-response-01",
+      "family": "missing-response",
+      "fixture": "conformance/missing-response-01.jsonl",
+      "expectedFirstDiagnosticCode": "D005",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "orphan-progress-01",
+      "family": "orphan-progress",
+      "fixture": "conformance/orphan-progress-01.jsonl",
+      "expectedFirstDiagnosticCode": "D006",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "malformed-02",
+      "family": "malformed",
+      "fixture": "conformance/malformed-02.jsonl",
+      "expectedFirstDiagnosticCode": "D001",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "duplicate-02",
+      "family": "duplicate",
+      "fixture": "conformance/duplicate-02.jsonl",
+      "expectedFirstDiagnosticCode": "D002",
+      "expectedSourceSeq": 2,
+      "expectedNodeId": "wire:2",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "orphan-response-02",
+      "family": "orphan-response",
+      "fixture": "conformance/orphan-response-02.jsonl",
+      "expectedFirstDiagnosticCode": "D003",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "missing-response-02",
+      "family": "missing-response",
+      "fixture": "conformance/missing-response-02.jsonl",
+      "expectedFirstDiagnosticCode": "D005",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "orphan-progress-02",
+      "family": "orphan-progress",
+      "fixture": "conformance/orphan-progress-02.jsonl",
+      "expectedFirstDiagnosticCode": "D006",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "malformed-03",
+      "family": "malformed",
+      "fixture": "conformance/malformed-03.jsonl",
+      "expectedFirstDiagnosticCode": "D001",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "duplicate-03",
+      "family": "duplicate",
+      "fixture": "conformance/duplicate-03.jsonl",
+      "expectedFirstDiagnosticCode": "D002",
+      "expectedSourceSeq": 2,
+      "expectedNodeId": "wire:2",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "orphan-response-03",
+      "family": "orphan-response",
+      "fixture": "conformance/orphan-response-03.jsonl",
+      "expectedFirstDiagnosticCode": "D003",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "missing-response-03",
+      "family": "missing-response",
+      "fixture": "conformance/missing-response-03.jsonl",
+      "expectedFirstDiagnosticCode": "D005",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "orphan-progress-03",
+      "family": "orphan-progress",
+      "fixture": "conformance/orphan-progress-03.jsonl",
+      "expectedFirstDiagnosticCode": "D006",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "malformed-04",
+      "family": "malformed",
+      "fixture": "conformance/malformed-04.jsonl",
+      "expectedFirstDiagnosticCode": "D001",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "duplicate-04",
+      "family": "duplicate",
+      "fixture": "conformance/duplicate-04.jsonl",
+      "expectedFirstDiagnosticCode": "D002",
+      "expectedSourceSeq": 2,
+      "expectedNodeId": "wire:2",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "orphan-response-04",
+      "family": "orphan-response",
+      "fixture": "conformance/orphan-response-04.jsonl",
+      "expectedFirstDiagnosticCode": "D003",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "missing-response-04",
+      "family": "missing-response",
+      "fixture": "conformance/missing-response-04.jsonl",
+      "expectedFirstDiagnosticCode": "D005",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "orphan-progress-04",
+      "family": "orphan-progress",
+      "fixture": "conformance/orphan-progress-04.jsonl",
+      "expectedFirstDiagnosticCode": "D006",
+      "expectedSourceSeq": 1,
+      "expectedNodeId": "wire:1",
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": true
+    },
+    {
+      "caseId": "concurrent-valid",
+      "family": "control",
+      "fixture": "conformance/concurrent-valid.jsonl",
+      "expectedFirstDiagnosticCode": null,
+      "expectedSourceSeq": null,
+      "expectedNodeId": null,
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": false
+    },
+    {
+      "caseId": "bidirectional-valid",
+      "family": "control",
+      "fixture": "conformance/bidirectional-valid.jsonl",
+      "expectedFirstDiagnosticCode": null,
+      "expectedSourceSeq": null,
+      "expectedNodeId": null,
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": false
+    },
+    {
+      "caseId": "jsonrpc-error",
+      "family": "control",
+      "fixture": "conformance/jsonrpc-error.jsonl",
+      "expectedFirstDiagnosticCode": null,
+      "expectedSourceSeq": null,
+      "expectedNodeId": null,
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": false
+    },
+    {
+      "caseId": "late-valid",
+      "family": "control",
+      "fixture": "conformance/late-valid.jsonl",
+      "expectedFirstDiagnosticCode": null,
+      "expectedSourceSeq": null,
+      "expectedNodeId": null,
+      "protocolVersion": "2025-06-18",
+      "contentPolicy": "off",
+      "groundTruth": false
+    }
+  ]
+}

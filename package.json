@@ -1,0 +1,61 @@
+{
+  "name": "causalwire",
+  "version": "0.1.0",
+  "description": "A local flight recorder for MCP stdio traffic.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/black-leg-nameko/causalwire.git"
+  },
+  "homepage": "https://github.com/black-leg-nameko/causalwire#readme",
+  "bugs": {
+    "url": "https://github.com/black-leg-nameko/causalwire/issues"
+  },
+  "type": "module",
+  "license": "Apache-2.0",
+  "keywords": ["mcp", "model-context-protocol", "observability", "debugging", "opentelemetry", "json-rpc", "cli"],
+  "engines": { "node": ">=20" },
+  "packageManager": "pnpm@11.17.0",
+  "bin": { "causalwire": "dist/cli.js" },
+  "exports": { ".": { "types": "./dist/public-api.d.ts", "import": "./dist/public-api.js" } },
+  "files": ["dist", "fixtures/demo", "artifacts/demo/causalwire-demo-v2.gif", "README.md", "DESIGN.md"],
+  "publishConfig": { "access": "public", "provenance": true },
+  "scripts": {
+    "build": "tsup src/cli.ts src/public-api.ts --format esm --dts --sourcemap --clean",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:e2e": "vitest run tests/e2e",
+    "test:conformance": "vitest run tests/conformance --reporter=verbose",
+    "test:security": "vitest run tests/security",
+    "bench:capture": "tsx bench/capture-overhead.ts",
+    "bench:child": "tsx bench/child-process-overhead.ts",
+    "pack:artifact": "npm pack --pack-destination artifacts/package",
+    "smoke:pack": "node scripts/tarball-smoke.mjs",
+    "audit:repo": "node scripts/repo-audit.mjs",
+    "verify": "npm run lint && npm run typecheck && npm run test && npm run test:integration && npm run test:e2e && npm run test:conformance && npm run test:security && npm run build",
+    "verify:release": "node scripts/release-verification.mjs",
+    "prepack": "npm run build",
+    "fixtures": "node scripts/generate-fixtures.mjs"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/exporter-trace-otlp-proto": "^0.221.0",
+    "@opentelemetry/resources": "^2.10.0",
+    "@opentelemetry/sdk-trace-base": "^2.10.0",
+    "@opentelemetry/semantic-conventions": "^1.36.0",
+    "commander": "^14.0.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "playwright": "^1.54.0",
+    "tsx": "^4.20.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^3.2.0"
+  }
+}
