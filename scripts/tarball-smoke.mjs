@@ -7,7 +7,8 @@ import { performance } from 'node:perf_hooks';
 const tarball=resolve('artifacts/package/causalwire-0.1.0.tgz');
 const work=mkdtempSync(join(tmpdir(),'causalwire-pack-smoke-'));
 const transcript=[];
-function run(args,input){const command=['exec','--yes',`--package=${tarball}`,'--','causalwire',...args];const started=performance.now();const result=spawnSync('npm',command,{cwd:work,input,encoding:'utf8'});const durationMs=performance.now()-started;transcript.push(`$ npm ${command.join(' ')}\n[exit ${result.status}; ${durationMs.toFixed(1)}ms]\n${result.stdout}${result.stderr}`);if(result.status!==0)throw new Error(`Smoke command failed: causalwire ${args.join(' ')}`);return durationMs;}
+const npmCommand=process.platform==='win32'?'npm.cmd':'npm';
+function run(args,input){const command=['exec','--yes',`--package=${tarball}`,'--','causalwire',...args];const started=performance.now();const result=spawnSync(npmCommand,command,{cwd:work,input,encoding:'utf8'});const durationMs=performance.now()-started;transcript.push(`$ npm ${command.join(' ')}\n[exit ${result.status}; ${durationMs.toFixed(1)}ms]\n${result.stdout}${result.stderr}`);if(result.status!==0)throw new Error(`Smoke command failed: causalwire ${args.join(' ')}`);return durationMs;}
 const quickstartMs=run(['demo','--out-dir','demo']);
 run(['inspect',resolve('fixtures/demo/stuck-tool.jsonl')]);
 run(['export',resolve('fixtures/demo/stuck-tool.jsonl'),'--format','html','--out','evidence.html']);

@@ -14,7 +14,7 @@
   "license": "Apache-2.0",
   "keywords": ["mcp", "model-context-protocol", "observability", "debugging", "opentelemetry", "json-rpc", "cli"],
   "engines": { "node": ">=20" },
-  "packageManager": "pnpm@11.17.0",
+  "packageManager": "pnpm@10.34.5",
   "bin": { "causalwire": "dist/cli.js" },
   "exports": { ".": { "types": "./dist/public-api.d.ts", "import": "./dist/public-api.js" } },
   "files": ["dist", "fixtures/demo", "artifacts/demo/causalwire-demo-v2.gif", "README.md", "DESIGN.md"],
