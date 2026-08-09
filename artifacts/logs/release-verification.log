@@ -1,4 +1,4 @@
-causalwire release verification
+causalwire release verification (absolute workspace paths sanitized as <repo>)
 started=2026-08-09T23:14:45.686Z
 platform=linux
 node=v22.23.1
@@ -22,7 +22,7 @@ $ npm run verify
 > vitest run tests/unit
 
 
- RUN  v3.2.7 /home/blackleg/ws/oss/causalwire
+ RUN  v3.2.7 <repo>
 
  ✓ tests/unit/core.test.ts (7 tests) 25ms
 
@@ -36,7 +36,7 @@ $ npm run verify
 > vitest run tests/integration
 
 
- RUN  v3.2.7 /home/blackleg/ws/oss/causalwire
+ RUN  v3.2.7 <repo>
 
  ✓ tests/integration/otlp.test.ts (3 tests) 55ms
  ✓ tests/integration/record.test.ts (3 tests) 257ms
@@ -53,7 +53,7 @@ $ npm run verify
 > vitest run tests/e2e
 
 
- RUN  v3.2.7 /home/blackleg/ws/oss/causalwire
+ RUN  v3.2.7 <repo>
 
  ✓ tests/e2e/cli.test.ts (3 tests) 1956ms
    ✓ CLI states > runs the success demo and writes real artifacts  689ms
@@ -70,7 +70,7 @@ $ npm run verify
 > vitest run tests/conformance --reporter=verbose
 
 
- RUN  v3.2.7 /home/blackleg/ws/oss/causalwire
+ RUN  v3.2.7 <repo>
 
  ✓ tests/conformance/corpus.test.ts > seeded failure corpus > matches exact diagnostic code and source sequence for at least 80% 37ms
  ✓ tests/conformance/corpus.test.ts > seeded failure corpus > does not count controls as failures 1ms
@@ -85,7 +85,7 @@ $ npm run verify
 > vitest run tests/security
 
 
- RUN  v3.2.7 /home/blackleg/ws/oss/causalwire
+ RUN  v3.2.7 <repo>
 
  ✓ tests/security/privacy.test.ts (2 tests) 26ms
 
@@ -471,7 +471,7 @@ $ corepack pnpm licenses list --prod --json
         "1.9.1"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+api@1.9.1/node_modules/@opentelemetry/api"
+        "<repo>/node_modules/.pnpm/@opentelemetry+api@1.9.1/node_modules/@opentelemetry/api"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -484,7 +484,7 @@ $ corepack pnpm licenses list --prod --json
         "0.221.0"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+api-logs@0.221.0/node_modules/@opentelemetry/api-logs"
+        "<repo>/node_modules/.pnpm/@opentelemetry+api-logs@0.221.0/node_modules/@opentelemetry/api-logs"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -497,7 +497,7 @@ $ corepack pnpm licenses list --prod --json
         "2.10.0"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+core@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/core"
+        "<repo>/node_modules/.pnpm/@opentelemetry+core@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/core"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -510,7 +510,7 @@ $ corepack pnpm licenses list --prod --json
         "0.221.0"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+exporter-trace-otlp-proto@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/exporter-trace-otlp-proto"
+        "<repo>/node_modules/.pnpm/@opentelemetry+exporter-trace-otlp-proto@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/exporter-trace-otlp-proto"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -523,7 +523,7 @@ $ corepack pnpm licenses list --prod --json
         "0.221.0"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+otlp-exporter-base@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/otlp-exporter-base"
+        "<repo>/node_modules/.pnpm/@opentelemetry+otlp-exporter-base@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/otlp-exporter-base"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -536,7 +536,7 @@ $ corepack pnpm licenses list --prod --json
         "0.221.0"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+otlp-transformer@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/otlp-transformer"
+        "<repo>/node_modules/.pnpm/@opentelemetry+otlp-transformer@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/otlp-transformer"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -549,7 +549,7 @@ $ corepack pnpm licenses list --prod --json
         "2.10.0"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+resources@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/resources"
+        "<repo>/node_modules/.pnpm/@opentelemetry+resources@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/resources"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -562,7 +562,7 @@ $ corepack pnpm licenses list --prod --json
         "0.221.0"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+sdk-logs@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-logs"
+        "<repo>/node_modules/.pnpm/@opentelemetry+sdk-logs@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-logs"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -575,7 +575,7 @@ $ corepack pnpm licenses list --prod --json
         "2.10.0"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+sdk-metrics@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-metrics"
+        "<repo>/node_modules/.pnpm/@opentelemetry+sdk-metrics@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-metrics"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -588,7 +588,7 @@ $ corepack pnpm licenses list --prod --json
         "2.10.0"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+sdk-trace@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-trace"
+        "<repo>/node_modules/.pnpm/@opentelemetry+sdk-trace@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-trace"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -601,7 +601,7 @@ $ corepack pnpm licenses list --prod --json
         "2.10.0"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+sdk-trace-base@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-trace-base"
+        "<repo>/node_modules/.pnpm/@opentelemetry+sdk-trace-base@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-trace-base"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -614,7 +614,7 @@ $ corepack pnpm licenses list --prod --json
         "1.43.0"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+semantic-conventions@1.43.0/node_modules/@opentelemetry/semantic-conventions"
+        "<repo>/node_modules/.pnpm/@opentelemetry+semantic-conventions@1.43.0/node_modules/@opentelemetry/semantic-conventions"
       ],
       "license": "Apache-2.0",
       "author": "OpenTelemetry Authors",
@@ -629,7 +629,7 @@ $ corepack pnpm licenses list --prod --json
         "14.0.3"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/commander@14.0.3/node_modules/commander"
+        "<repo>/node_modules/.pnpm/commander@14.0.3/node_modules/commander"
       ],
       "license": "MIT",
       "author": "TJ Holowaychuk",
@@ -642,7 +642,7 @@ $ corepack pnpm licenses list --prod --json
         "4.4.3"
       ],
       "paths": [
-        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/zod@4.4.3/node_modules/zod"
+        "<repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod"
       ],
       "license": "MIT",
       "author": "Colin McDonnell",
