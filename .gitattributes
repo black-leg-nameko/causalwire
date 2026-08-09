@@ -1,0 +1,4 @@
+artifacts/** linguist-generated=true
+fixtures/** linguist-generated=true
+*.md linguist-documentation=true
+
