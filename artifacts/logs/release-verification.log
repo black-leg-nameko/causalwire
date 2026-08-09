@@ -1,0 +1,726 @@
+causalwire release verification
+started=2026-08-09T23:14:45.686Z
+platform=linux
+node=v22.23.1
+
+$ npm run verify
+[exit 0; 19812ms]
+
+> causalwire@0.1.0 verify
+> npm run lint && npm run typecheck && npm run test && npm run test:integration && npm run test:e2e && npm run test:conformance && npm run test:security && npm run build
+
+
+> causalwire@0.1.0 lint
+> eslint .
+
+
+> causalwire@0.1.0 typecheck
+> tsc --noEmit
+
+
+> causalwire@0.1.0 test
+> vitest run tests/unit
+
+
+ RUN  v3.2.7 /home/blackleg/ws/oss/causalwire
+
+ ✓ tests/unit/core.test.ts (7 tests) 25ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  08:14:50
+   Duration  711ms (transform 186ms, setup 0ms, collect 275ms, tests 25ms, environment 0ms, prepare 96ms)
+
+
+> causalwire@0.1.0 test:integration
+> vitest run tests/integration
+
+
+ RUN  v3.2.7 /home/blackleg/ws/oss/causalwire
+
+ ✓ tests/integration/otlp.test.ts (3 tests) 55ms
+ ✓ tests/integration/record.test.ts (3 tests) 257ms
+ ✓ tests/integration/faults.test.ts (7 tests) 989ms
+   ✓ capture fault handling > forwards SIGTERM and removes process signal listeners  765ms
+
+ Test Files  3 passed (3)
+      Tests  13 passed (13)
+   Start at  08:14:52
+   Duration  1.66s (transform 262ms, setup 0ms, collect 888ms, tests 1.30s, environment 1ms, prepare 325ms)
+
+
+> causalwire@0.1.0 test:e2e
+> vitest run tests/e2e
+
+
+ RUN  v3.2.7 /home/blackleg/ws/oss/causalwire
+
+ ✓ tests/e2e/cli.test.ts (3 tests) 1956ms
+   ✓ CLI states > runs the success demo and writes real artifacts  689ms
+   ✓ CLI states > returns usage error for invalid scenario  629ms
+   ✓ CLI states > renders the empty state without fake nodes  637ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  08:14:54
+   Duration  2.44s (transform 66ms, setup 0ms, collect 61ms, tests 1.96s, environment 0ms, prepare 100ms)
+
+
+> causalwire@0.1.0 test:conformance
+> vitest run tests/conformance --reporter=verbose
+
+
+ RUN  v3.2.7 /home/blackleg/ws/oss/causalwire
+
+ ✓ tests/conformance/corpus.test.ts > seeded failure corpus > matches exact diagnostic code and source sequence for at least 80% 37ms
+ ✓ tests/conformance/corpus.test.ts > seeded failure corpus > does not count controls as failures 1ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  08:14:58
+   Duration  613ms (transform 114ms, setup 0ms, collect 177ms, tests 40ms, environment 0ms, prepare 109ms)
+
+
+> causalwire@0.1.0 test:security
+> vitest run tests/security
+
+
+ RUN  v3.2.7 /home/blackleg/ws/oss/causalwire
+
+ ✓ tests/security/privacy.test.ts (2 tests) 26ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  08:14:59
+   Duration  863ms (transform 186ms, setup 0ms, collect 435ms, tests 26ms, environment 0ms, prepare 128ms)
+
+
+> causalwire@0.1.0 build
+> tsup src/cli.ts src/public-api.ts --format esm --dts --sourcemap --clean
+
+CLI Building entry: src/cli.ts, src/public-api.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+ESM dist/cli.js                14.24 KB
+ESM dist/public-api.js         279.00 B
+ESM dist/chunk-UBMFB7BT.js     43.93 KB
+ESM dist/cli.js.map            23.15 KB
+ESM dist/chunk-UBMFB7BT.js.map 73.22 KB
+ESM dist/public-api.js.map     71.00 B
+ESM ⚡️ Build success in 56ms
+DTS Build start
+DTS ⚡️ Build success in 3857ms
+DTS dist/cli.d.ts        20.00 B
+DTS dist/public-api.d.ts 4.44 KB
+
+Wrote /tmp/cw-empty-z3PuVm/empty.html (6187 bytes)
+
+
+$ node scripts/browser-qa.mjs
+[exit 0; 2492ms]
+{
+  "generatedAt": "2026-08-09T23:15:07.970Z",
+  "browser": "Playwright Chromium",
+  "cases": [
+    {
+      "name": "evidence-success",
+      "path": "artifacts/demo/stuck-tool.html",
+      "width": 1280,
+      "height": 900,
+      "title": "Causalwire · demo_stuck",
+      "scrollWidth": 1280,
+      "innerWidth": 1280,
+      "scrollX": 0,
+      "scrollY": 0,
+      "bodyText": "Skip to evidenceCAUSALWIRE / LOCAL EVIDENCEFind the first broken edge.demo_stuck · mcp-jsonrpc@1CONTENT OFF · CAPTURE INCOMPLETEFRAMES4REQUESTS2DIAGNOSTICS1CAPTUREINCOMPLETE⚠ FIRST BREAK · SOURCE SEQ 3D004 / stuck_requestRequest exceeded the live analysis timeout.Causal graphExplicit JSON-RPC correl",
+      "firstBreak": true,
+      "empty": false,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "pass": true
+    },
+    {
+      "name": "evidence-success",
+      "path": "artifacts/demo/stuck-tool.html",
+      "width": 768,
+      "height": 900,
+      "title": "Causalwire · demo_stuck",
+      "scrollWidth": 768,
+      "innerWidth": 768,
+      "scrollX": 0,
+      "scrollY": 0,
+      "bodyText": "Skip to evidenceCAUSALWIRE / LOCAL EVIDENCEFind the first broken edge.demo_stuck · mcp-jsonrpc@1CONTENT OFF · CAPTURE INCOMPLETEFRAMES4REQUESTS2DIAGNOSTICS1CAPTUREINCOMPLETE⚠ FIRST BREAK · SOURCE SEQ 3D004 / stuck_requestRequest exceeded the live analysis timeout.Causal graphExplicit JSON-RPC correl",
+      "firstBreak": true,
+      "empty": false,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "pass": true
+    },
+    {
+      "name": "evidence-success",
+      "path": "artifacts/demo/stuck-tool.html",
+      "width": 375,
+      "height": 812,
+      "title": "Causalwire · demo_stuck",
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "scrollX": 0,
+      "scrollY": 0,
+      "bodyText": "Skip to evidenceCAUSALWIRE / LOCAL EVIDENCEFind the first broken edge.demo_stuck · mcp-jsonrpc@1CONTENT OFF · CAPTURE INCOMPLETEFRAMES4REQUESTS2DIAGNOSTICS1CAPTUREINCOMPLETE⚠ FIRST BREAK · SOURCE SEQ 3D004 / stuck_requestRequest exceeded the live analysis timeout.Causal graphExplicit JSON-RPC correl",
+      "firstBreak": true,
+      "empty": false,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "pass": true
+    },
+    {
+      "name": "evidence-empty",
+      "path": "artifacts/demo/empty.html",
+      "width": 1280,
+      "height": 900,
+      "title": "Causalwire · empty_first_run",
+      "scrollWidth": 1280,
+      "innerWidth": 1280,
+      "scrollX": 0,
+      "scrollY": 0,
+      "bodyText": "Skip to evidenceCAUSALWIRE / LOCAL EVIDENCEFind the first broken edge.empty_first_run · mcp-jsonrpc@1CONTENT OFF · CAPTURE COMPLETEFRAMES0REQUESTS0DIAGNOSTICS0CAPTURECOMPLETECausal graphExplicit JSON-RPC correlation only. Dotted connectors show chronology, not inferred causality.No JSON-RPC exchange",
+      "firstBreak": false,
+      "empty": true,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "pass": true
+    },
+    {
+      "name": "evidence-empty",
+      "path": "artifacts/demo/empty.html",
+      "width": 375,
+      "height": 812,
+      "title": "Causalwire · empty_first_run",
+      "scrollWidth": 375,
+      "innerWidth": 375,
+      "scrollX": 0,
+      "scrollY": 0,
+      "bodyText": "Skip to evidenceCAUSALWIRE / LOCAL EVIDENCEFind the first broken edge.empty_first_run · mcp-jsonrpc@1CONTENT OFF · CAPTURE COMPLETEFRAMES0REQUESTS0DIAGNOSTICS0CAPTURECOMPLETECausal graphExplicit JSON-RPC correlation only. Dotted connectors show chronology, not inferred causality.No JSON-RPC exchange",
+      "firstBreak": false,
+      "empty": true,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "pass": true
+    },
+    {
+      "name": "svg-success",
+      "path": "artifacts/demo/stuck-tool.svg",
+      "width": 1280,
+      "height": 500,
+      "title": "Causalwire evidence for demo_stuck",
+      "scrollWidth": 1280,
+      "innerWidth": 1280,
+      "scrollX": 0,
+      "scrollY": 0,
+      "bodyText": "Causalwire evidence for demo_stuckFirst causal break D004 at source sequence 3. Metadata-only MCP causal graph.CAUSALWIRE / CAUSAL EVIDENCEdemo_stuck · INCOMPLETE · CONTENT OFF · mcp-jsonrpc@1SEQ 1 · requestinitializeOKSEQ 2 · responsewire:2OKSEQ 3 · responsesynthetic:response:3STUCKSEQ 3 · requestt",
+      "firstBreak": true,
+      "empty": false,
+      "consoleErrors": [],
+      "failedRequests": [],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
+
+
+
+$ corepack pnpm bench:capture
+[exit 0; 1851ms]
+{
+  "generatedAt": "2026-08-09T23:15:09.797Z",
+  "method": "alternating in-process immediate echo baseline vs content=off shadow frame parse; excludes MCP/tool/network time",
+  "conditions": {
+    "warmupPerRun": 200,
+    "measuredPerRun": 2000,
+    "runs": 5,
+    "payloadMix": "80% 1KiB, 15% 16KiB, 5% 256KiB",
+    "maxConcurrency": 100,
+    "bidirectional": true,
+    "debugLog": false,
+    "usageLog": false
+  },
+  "hardware": {
+    "cpu": "11th Gen Intel(R) Core(TM) i7-1165G7 @ 2.80GHz",
+    "cpuCount": 8,
+    "memoryGiB": 7.6,
+    "os": "linux 6.18.33.2-microsoft-standard-WSL2",
+    "node": "v22.23.1",
+    "commit": "uncommitted"
+  },
+  "buckets": [
+    {
+      "bucket": "1KiB",
+      "count": 8000,
+      "baselineP95Ms": 0.0019470000000865184,
+      "causalwireP95Ms": 0.04250899999999547,
+      "incrementalP95Ms": 0.04056199999990895,
+      "baselineP99Ms": 0.0038050000000566797,
+      "causalwireP99Ms": 0.11013900000000376,
+      "incrementalP99Ms": 0.10633399999994708
+    },
+    {
+      "bucket": "16KiB",
+      "count": 1600,
+      "baselineP95Ms": 0.004836000000011609,
+      "causalwireP95Ms": 0.08531300000004194,
+      "incrementalP95Ms": 0.08047700000003033,
+      "baselineP99Ms": 0.014168000000040593,
+      "causalwireP99Ms": 0.1758470000000898,
+      "incrementalP99Ms": 0.1616790000000492
+    },
+    {
+      "bucket": "256KiB",
+      "count": 400,
+      "baselineP95Ms": 0.03263600000002498,
+      "causalwireP95Ms": 2.4348790000000236,
+      "incrementalP95Ms": 2.4022429999999986,
+      "baselineP99Ms": 0.14398900000003323,
+      "causalwireP99Ms": 3.8732100000000855,
+      "incrementalP99Ms": 3.7292210000000523
+    }
+  ],
+  "maxIncrementalP95Ms": 2.4022429999999986,
+  "maxIncrementalP99Ms": 3.7292210000000523,
+  "byteMismatch": 0,
+  "droppedFrames": 0,
+  "reorderedFrames": 0,
+  "pass": true,
+  "limitations": [
+    "This launch-workspace measurement uses an in-process local echo loop rather than an OS child-process round trip. CI should repeat the packaged child echo benchmark on Linux, macOS, and Windows before release."
+  ]
+}
+
+$ tsx bench/capture-overhead.ts
+
+
+$ corepack pnpm bench:child
+[exit 0; 3499ms]
+{
+  "generatedAt": "2026-08-09T23:15:13.305Z",
+  "method": "sequential newline exchange, direct OS child echo vs dist CLI record wrapper; one in-flight frame at a time",
+  "conditions": {
+    "warmup": 30,
+    "measured": 300,
+    "runs": 3,
+    "payloadMix": "80% 1KiB, 15% 16KiB, 5% 256KiB",
+    "content": "off"
+  },
+  "environment": {
+    "os": "linux 6.18.33.2-microsoft-standard-WSL2",
+    "node": "v22.23.1",
+    "cpu": "11th Gen Intel(R) Core(TM) i7-1165G7 @ 2.80GHz"
+  },
+  "buckets": [
+    {
+      "bucket": "1KiB",
+      "count": 720,
+      "baselineP95Ms": 0.3603800000000206,
+      "causalwireP95Ms": 1.0541450000000623,
+      "incrementalP95Ms": 0.6937650000000417,
+      "baselineP99Ms": 0.9464540000001307,
+      "causalwireP99Ms": 1.4069229999995514
+    },
+    {
+      "bucket": "16KiB",
+      "count": 135,
+      "baselineP95Ms": 0.7107690000000275,
+      "causalwireP95Ms": 1.5586540000000468,
+      "incrementalP95Ms": 0.8478850000000193,
+      "baselineP99Ms": 1.1063809999998284,
+      "causalwireP99Ms": 2.4463519999999335
+    },
+    {
+      "bucket": "256KiB",
+      "count": 45,
+      "baselineP95Ms": 2.099132999999995,
+      "causalwireP95Ms": 6.617495999999846,
+      "incrementalP95Ms": 4.518362999999852,
+      "baselineP99Ms": 3.781878000000006,
+      "causalwireP99Ms": 9.134545000000003
+    }
+  ],
+  "maxIncrementalP95Ms": 4.518362999999852,
+  "byteMismatch": 0,
+  "pass": true,
+  "claimBoundary": "Measures a local packaged child-process echo path. It excludes remote MCP/tool/network latency and is cross-platform evidence only on runners that execute it.",
+  "sourceSha256": "96aa9557ea6c4146209887e3973a4334cda858ab83c5b80e99fd93b0e5a533fd"
+}
+
+$ tsx bench/child-process-overhead.ts
+
+
+$ corepack pnpm pack:artifact
+[exit 0; 7223ms]
+
+> causalwire@0.1.0 prepack
+> npm run build
+
+
+> causalwire@0.1.0 build
+> tsup src/cli.ts src/public-api.ts --format esm --dts --sourcemap --clean
+
+CLI Building entry: src/cli.ts, src/public-api.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+ESM dist/public-api.js         279.00 B
+ESM dist/chunk-UBMFB7BT.js     43.93 KB
+ESM dist/cli.js                14.24 KB
+ESM dist/public-api.js.map     71.00 B
+ESM dist/chunk-UBMFB7BT.js.map 73.22 KB
+ESM dist/cli.js.map            23.15 KB
+ESM ⚡️ Build success in 58ms
+DTS Build start
+DTS ⚡️ Build success in 4069ms
+DTS dist/cli.d.ts        20.00 B
+DTS dist/public-api.d.ts 4.44 KB
+causalwire-0.1.0.tgz
+
+$ npm pack --pack-destination artifacts/package
+npm notice
+npm notice 📦  causalwire@0.1.0
+npm notice Tarball Contents
+npm notice 5.2kB DESIGN.md
+npm notice 11.4kB LICENSE
+npm notice 8.1kB README.md
+npm notice 53.6kB artifacts/demo/causalwire-demo-v2.gif
+npm notice 45.0kB dist/chunk-UBMFB7BT.js
+npm notice 75.0kB dist/chunk-UBMFB7BT.js.map
+npm notice 20B dist/cli.d.ts
+npm notice 14.6kB dist/cli.js
+npm notice 23.7kB dist/cli.js.map
+npm notice 4.5kB dist/public-api.d.ts
+npm notice 279B dist/public-api.js
+npm notice 71B dist/public-api.js.map
+npm notice 3.0kB fixtures/demo/duplicate-id.jsonl
+npm notice 3.5kB fixtures/demo/orphan-result.jsonl
+npm notice 2.9kB fixtures/demo/stuck-tool.jsonl
+npm notice 2.3kB package.json
+npm notice Tarball Details
+npm notice name: causalwire
+npm notice version: 0.1.0
+npm notice filename: causalwire-0.1.0.tgz
+npm notice package size: 115.0 kB
+npm notice unpacked size: 253.3 kB
+npm notice shasum: 9e453c780b149e6e9709c1b4f98220e6140b48d3
+npm notice integrity: sha512-QIEQyA8H0RKv/[...]kiE5nrFmBzA4w==
+npm notice total files: 16
+npm notice
+
+
+$ corepack pnpm smoke:pack
+[exit 0; 9262ms]
+Tarball smoke PASS: 7 commands, quickstart 1203.2ms, privacy marker occurrences 0
+
+$ node scripts/tarball-smoke.mjs
+
+
+$ gitleaks git . --redact
+[exit 0; 708ms]
+
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+8:15AM INF 0 commits scanned.
+8:15AM INF scanned ~0 bytes (0) in 234ms
+8:15AM INF no leaks found
+
+
+$ gitleaks dir . --redact
+[exit 0; 894ms]
+
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+8:15AM INF scanned ~606267 bytes (606.27 KB) in 67ms
+8:15AM INF no leaks found
+
+
+$ corepack pnpm audit --audit-level low
+[exit 0; 1205ms]
+No known vulnerabilities found
+
+
+
+$ corepack pnpm licenses list --prod --json
+[exit 0; 806ms]
+{
+  "Apache-2.0": [
+    {
+      "name": "@opentelemetry/api",
+      "versions": [
+        "1.9.1"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+api@1.9.1/node_modules/@opentelemetry/api"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/api",
+      "description": "Public API for OpenTelemetry"
+    },
+    {
+      "name": "@opentelemetry/api-logs",
+      "versions": [
+        "0.221.0"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+api-logs@0.221.0/node_modules/@opentelemetry/api-logs"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/api-logs",
+      "description": "Public logs API for OpenTelemetry"
+    },
+    {
+      "name": "@opentelemetry/core",
+      "versions": [
+        "2.10.0"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+core@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/core"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-core",
+      "description": "OpenTelemetry Core provides constants and utilities shared by all OpenTelemetry SDK packages."
+    },
+    {
+      "name": "@opentelemetry/exporter-trace-otlp-proto",
+      "versions": [
+        "0.221.0"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+exporter-trace-otlp-proto@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/exporter-trace-otlp-proto"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/exporter-trace-otlp-proto",
+      "description": "OpenTelemetry Collector Exporter allows user to send collected traces to the OpenTelemetry Collector using protobuf over HTTP"
+    },
+    {
+      "name": "@opentelemetry/otlp-exporter-base",
+      "versions": [
+        "0.221.0"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+otlp-exporter-base@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/otlp-exporter-base"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/otlp-exporter-base",
+      "description": "OpenTelemetry OTLP Exporter base (for internal use only)"
+    },
+    {
+      "name": "@opentelemetry/otlp-transformer",
+      "versions": [
+        "0.221.0"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+otlp-transformer@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/otlp-transformer"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/otlp-transformer",
+      "description": "Transform OpenTelemetry SDK data into OTLP"
+    },
+    {
+      "name": "@opentelemetry/resources",
+      "versions": [
+        "2.10.0"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+resources@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/resources"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-resources",
+      "description": "OpenTelemetry SDK resources"
+    },
+    {
+      "name": "@opentelemetry/sdk-logs",
+      "versions": [
+        "0.221.0"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+sdk-logs@0.221.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-logs"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/sdk-logs",
+      "description": "OpenTelemetry logs SDK"
+    },
+    {
+      "name": "@opentelemetry/sdk-metrics",
+      "versions": [
+        "2.10.0"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+sdk-metrics@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-metrics"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/sdk-metrics",
+      "description": "OpenTelemetry metrics SDK"
+    },
+    {
+      "name": "@opentelemetry/sdk-trace",
+      "versions": [
+        "2.10.0"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+sdk-trace@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-trace"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/sdk-trace",
+      "description": "OpenTelemetry Tracing"
+    },
+    {
+      "name": "@opentelemetry/sdk-trace-base",
+      "versions": [
+        "2.10.0"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+sdk-trace-base@2.10.0_@opentelemetry+api@1.9.1/node_modules/@opentelemetry/sdk-trace-base"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/opentelemetry-sdk-trace-base",
+      "description": "OpenTelemetry Tracing"
+    },
+    {
+      "name": "@opentelemetry/semantic-conventions",
+      "versions": [
+        "1.43.0"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/@opentelemetry+semantic-conventions@1.43.0/node_modules/@opentelemetry/semantic-conventions"
+      ],
+      "license": "Apache-2.0",
+      "author": "OpenTelemetry Authors",
+      "homepage": "https://github.com/open-telemetry/opentelemetry-js/tree/main/semantic-conventions",
+      "description": "OpenTelemetry semantic conventions"
+    }
+  ],
+  "MIT": [
+    {
+      "name": "commander",
+      "versions": [
+        "14.0.3"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/commander@14.0.3/node_modules/commander"
+      ],
+      "license": "MIT",
+      "author": "TJ Holowaychuk",
+      "homepage": "https://github.com/tj/commander.js#readme",
+      "description": "the complete solution for node.js command-line programs"
+    },
+    {
+      "name": "zod",
+      "versions": [
+        "4.4.3"
+      ],
+      "paths": [
+        "/home/blackleg/ws/oss/causalwire/node_modules/.pnpm/zod@4.4.3/node_modules/zod"
+      ],
+      "license": "MIT",
+      "author": "Colin McDonnell",
+      "homepage": "https://zod.dev",
+      "description": "TypeScript-first schema declaration and validation library with static type inference"
+    }
+  ]
+}
+
+
+
+$ npm publish --dry-run --provenance --access public
+[exit 0; 6416ms]
+
+> causalwire@0.1.0 prepack
+> npm run build
+
+
+> causalwire@0.1.0 build
+> tsup src/cli.ts src/public-api.ts --format esm --dts --sourcemap --clean
+
+CLI Building entry: src/cli.ts, src/public-api.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+ESM dist/cli.js                14.24 KB
+ESM dist/chunk-UBMFB7BT.js     43.93 KB
+ESM dist/public-api.js         279.00 B
+ESM dist/cli.js.map            23.15 KB
+ESM dist/public-api.js.map     71.00 B
+ESM dist/chunk-UBMFB7BT.js.map 73.22 KB
+ESM ⚡️ Build success in 56ms
+DTS Build start
+DTS ⚡️ Build success in 3906ms
+DTS dist/cli.d.ts        20.00 B
+DTS dist/public-api.d.ts 4.44 KB
++ causalwire@0.1.0
+
+npm notice
+npm notice 📦  causalwire@0.1.0
+npm notice Tarball Contents
+npm notice 5.2kB DESIGN.md
+npm notice 11.4kB LICENSE
+npm notice 8.1kB README.md
+npm notice 53.6kB artifacts/demo/causalwire-demo-v2.gif
+npm notice 45.0kB dist/chunk-UBMFB7BT.js
+npm notice 75.0kB dist/chunk-UBMFB7BT.js.map
+npm notice 20B dist/cli.d.ts
+npm notice 14.6kB dist/cli.js
+npm notice 23.7kB dist/cli.js.map
+npm notice 4.5kB dist/public-api.d.ts
+npm notice 279B dist/public-api.js
+npm notice 71B dist/public-api.js.map
+npm notice 3.0kB fixtures/demo/duplicate-id.jsonl
+npm notice 3.5kB fixtures/demo/orphan-result.jsonl
+npm notice 2.9kB fixtures/demo/stuck-tool.jsonl
+npm notice 2.3kB package.json
+npm notice Tarball Details
+npm notice name: causalwire
+npm notice version: 0.1.0
+npm notice filename: causalwire-0.1.0.tgz
+npm notice package size: 115.0 kB
+npm notice unpacked size: 253.3 kB
+npm notice shasum: 9e453c780b149e6e9709c1b4f98220e6140b48d3
+npm notice integrity: sha512-QIEQyA8H0RKv/[...]kiE5nrFmBzA4w==
+npm notice total files: 16
+npm notice
+npm notice Publishing to https://registry.npmjs.org/ with tag latest and public access (dry-run)
+
+
+$ corepack pnpm audit:repo
+[exit 0; 2059ms]
+Repository audit PASS: 30/30 checks passed
+
+$ node scripts/repo-audit.mjs
+
+
+finished=2026-08-09T23:15:41.920Z
+verdict=PASS

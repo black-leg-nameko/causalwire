@@ -1,0 +1,19 @@
+causalwire preserved regression failure
+started=2026-08-09T23:13:02.502Z
+command=corepack pnpm verify:release
+result=FAIL exit=1
+
+tests/integration/faults.test.ts
+case=capture fault handling > forwards SIGTERM and removes process signal listeners
+expected_exit=42
+observed_exit=143
+
+evidence:
+  Test Files  1 failed | 2 passed (3)
+  Tests       1 failed | 12 passed (13)
+  AssertionError: expected 143 to be 42
+
+root_cause=The test used the wrapper's "Recording MCP stdio" status as readiness, but that line was emitted before wrapper signal listeners were registered and before the spawned JavaScript child registered its SIGTERM handler.
+fix=Emit wrapper status only after wrapper signal listeners are registered; have the fixture child emit CHILD_READY only after its handler is installed; send SIGTERM after that explicit marker.
+retest_1=tests/integration/faults.test.ts passed 7/7 in 10 consecutive isolated runs
+retest_2=corepack pnpm verify:release PASS; final log artifacts/logs/release-verification.log

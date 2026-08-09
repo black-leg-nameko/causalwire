@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-08-09T23:15:09.797Z",
+  "method": "alternating in-process immediate echo baseline vs content=off shadow frame parse; excludes MCP/tool/network time",
+  "conditions": {
+    "warmupPerRun": 200,
+    "measuredPerRun": 2000,
+    "runs": 5,
+    "payloadMix": "80% 1KiB, 15% 16KiB, 5% 256KiB",
+    "maxConcurrency": 100,
+    "bidirectional": true,
+    "debugLog": false,
+    "usageLog": false
+  },
+  "hardware": {
+    "cpu": "11th Gen Intel(R) Core(TM) i7-1165G7 @ 2.80GHz",
+    "cpuCount": 8,
+    "memoryGiB": 7.6,
+    "os": "linux 6.18.33.2-microsoft-standard-WSL2",
+    "node": "v22.23.1",
+    "commit": "uncommitted"
+  },
+  "buckets": [
+    {
+      "bucket": "1KiB",
+      "count": 8000,
+      "baselineP95Ms": 0.0019470000000865184,
+      "causalwireP95Ms": 0.04250899999999547,
+      "incrementalP95Ms": 0.04056199999990895,
+      "baselineP99Ms": 0.0038050000000566797,
+      "causalwireP99Ms": 0.11013900000000376,
+      "incrementalP99Ms": 0.10633399999994708
+    },
+    {
+      "bucket": "16KiB",
+      "count": 1600,
+      "baselineP95Ms": 0.004836000000011609,
+      "causalwireP95Ms": 0.08531300000004194,
+      "incrementalP95Ms": 0.08047700000003033,
+      "baselineP99Ms": 0.014168000000040593,
+      "causalwireP99Ms": 0.1758470000000898,
+      "incrementalP99Ms": 0.1616790000000492
+    },
+    {
+      "bucket": "256KiB",
+      "count": 400,
+      "baselineP95Ms": 0.03263600000002498,
+      "causalwireP95Ms": 2.4348790000000236,
+      "incrementalP95Ms": 2.4022429999999986,
+      "baselineP99Ms": 0.14398900000003323,
+      "causalwireP99Ms": 3.8732100000000855,
+      "incrementalP99Ms": 3.7292210000000523
+    }
+  ],
+  "maxIncrementalP95Ms": 2.4022429999999986,
+  "maxIncrementalP99Ms": 3.7292210000000523,
+  "byteMismatch": 0,
+  "droppedFrames": 0,
+  "reorderedFrames": 0,
+  "pass": true,
+  "limitations": [
+    "This launch-workspace measurement uses an in-process local echo loop rather than an OS child-process round trip. CI should repeat the packaged child echo benchmark on Linux, macOS, and Windows before release."
+  ]
+}
