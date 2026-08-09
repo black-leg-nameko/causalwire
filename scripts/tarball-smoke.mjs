@@ -1,14 +1,17 @@
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { performance } from 'node:perf_hooks';
 
 const tarball=resolve('artifacts/package/causalwire-0.1.0.tgz');
 const work=mkdtempSync(join(tmpdir(),'causalwire-pack-smoke-'));
 const transcript=[];
-const npmCommand=process.platform==='win32'?'npm.cmd':'npm';
-function run(args,input){const command=['exec','--yes',`--package=${tarball}`,'--','causalwire',...args];const started=performance.now();const result=spawnSync(npmCommand,command,{cwd:work,input,encoding:'utf8'});const durationMs=performance.now()-started;transcript.push(`$ npm ${command.join(' ')}\n[exit ${result.status}; ${durationMs.toFixed(1)}ms]\n${result.stdout}${result.stderr}`);if(result.status!==0)throw new Error(`Smoke command failed: causalwire ${args.join(' ')}`);return durationMs;}
+const windowsNpmCli=join(dirname(process.execPath),'node_modules','npm','bin','npm-cli.js');
+if(process.platform==='win32'&&!existsSync(windowsNpmCli))throw new Error(`npm CLI not found beside Node.js: ${windowsNpmCli}`);
+const npmCommand=process.platform==='win32'?process.execPath:'npm';
+const npmPrefix=process.platform==='win32'?[windowsNpmCli]:[];
+function run(args,input){const command=['exec','--yes',`--package=${tarball}`,'--','causalwire',...args];const started=performance.now();const result=spawnSync(npmCommand,[...npmPrefix,...command],{cwd:work,input,encoding:'utf8'});const durationMs=performance.now()-started;transcript.push(`$ npm ${command.join(' ')}\n[exit ${result.status}; ${durationMs.toFixed(1)}ms]\n${result.stdout??''}${result.stderr??''}${result.error?`\n${result.error.stack??result.error.message}`:''}`);if(result.status!==0)throw new Error(`Smoke command failed: causalwire ${args.join(' ')} (${result.error?.message??`exit ${result.status}`})`);return durationMs;}
 const quickstartMs=run(['demo','--out-dir','demo']);
 run(['inspect',resolve('fixtures/demo/stuck-tool.jsonl')]);
 run(['export',resolve('fixtures/demo/stuck-tool.jsonl'),'--format','html','--out','evidence.html']);
