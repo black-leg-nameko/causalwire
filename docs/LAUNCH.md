@@ -48,7 +48,7 @@ All boxes must be checked by **2026-08-24 12:00 PDT / 2026-08-25 04:00 JST**. Th
 - [ ] Reddit community rules have been retrieved through an authenticated official interface or user-provided export and recorded in §6. If not, Reddit is **skipped**, not guessed.
 - [ ] One person is available to reproduce bugs, correct claims, and answer for four hours after Show HN; a second session is scheduled for the following European morning.
 
-Gate C evidence and the public Node 20/22/24 × Linux/macOS/Windows matrix are green. GitHub source is public; npm publication and literal `@latest` smoke remain pending registry authentication.
+Gate C evidence and the public Node 20/22/24 × Linux/macOS/Windows matrix are green. GitHub source and `causalwire@0.1.0` are public; a cold-cache literal `@latest` demo completed in 23.51 seconds.
 
 ## 3. Positioning and claim boundary
 

@@ -14,7 +14,7 @@ npx -y causalwire@latest demo
 
 No account, API key, Docker, config file, or network backend is required. The command prints `FIRST BREAK D004` and writes standalone HTML/SVG evidence. The incident-first view puts the earliest break and its affected tool above run metrics, then preserves the observed sequence and deterministic findings below it.
 
-Until the first npm publish completes, run the exact package path from source with `corepack pnpm pack:artifact && corepack pnpm smoke:pack`.
+The published `causalwire@latest` package is the supported quickstart. Contributors can verify the equivalent packed source path with `corepack pnpm pack:artifact && corepack pnpm smoke:pack`.
 
 Record a real MCP stdio server without changing its code:
 
@@ -149,4 +149,4 @@ Contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), the [C
 
 ## Status and license
 
-Public pre-release `0.1.0` source. Licensed under [Apache-2.0](LICENSE). npm publication is pending registry authentication; all release claims remain bounded by linked local reports and public CI artifacts.
+Public pre-release `0.1.0` source and npm package. Licensed under [Apache-2.0](LICENSE). Release claims remain bounded by linked local reports, public CI artifacts, and the reproducible `@latest` smoke path above.

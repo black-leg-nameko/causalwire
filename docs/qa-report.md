@@ -3,7 +3,7 @@
 - Date: 2026-08-10 (Asia/Tokyo)
 - Runtime tested: Node v22.23.1, Linux 6.18.33.2-microsoft-standard-WSL2
 - Browser tested: Playwright Chromium 151
-- Product state: launch-grade public source; npm publication pending registry authentication
+- Product state: launch-grade public source and `causalwire@0.1.0` npm package
 
 ## Outcome
 
@@ -49,7 +49,7 @@ Machine-readable browser evidence is in `artifacts/reports/browser-qa.json`. Scr
 - **Resolved publicly:** the packaged OS child-process benchmark passes locally and in every public CI matrix job. The saved in-process benchmark remains a separate shadow-path measurement.
 - **Resolved locally:** automated first-signal forwarding/listener cleanup, output backpressure, bounded-journal truncation, and forced ENOSPC writer tests pass. The SIGTERM process test is skipped on Windows where POSIX signal semantics do not apply; Windows exit behavior remains covered by its CI process tests.
 - A true terminal recording was not available; the supplied 8-second GIF shows the real browser evidence flow. CLI command transcripts are saved separately.
-- **Resolved locally and publicly:** repository policy/security hardening passes 30/30 automated checks, and `docs/SECURITY_REVIEW.md` records Critical 0 / High open 0. GitHub settings and public CI are active; npm authentication remains the only publication gate.
+- **Resolved locally and publicly:** repository policy/security hardening passes 30/30 automated checks, and `docs/SECURITY_REVIEW.md` records Critical 0 / High open 0. GitHub settings, public CI, npm `latest`, and a cold-cache registry smoke are green.
 
 ## How to reproduce
 
