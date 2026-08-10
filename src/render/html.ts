@@ -1,11 +1,149 @@
-import type { GraphV1 } from '../schema/graph-v1.js';
+import type { Diagnostic, GraphNode, GraphV1 } from '../schema/graph-v1.js';
 import { escapeHtml } from './shared.js';
+import { evidenceStyles } from './html-styles.js';
 
-const tokenCss=`:root{--primary:#d97706;--primary-hi:#f59e0b;--ink:#f7f8f8;--muted:#d0d6e0;--subtle:#8a8f98;--tertiary:#62666d;--canvas:#010102;--s1:#0f1011;--s2:#141516;--hair:#23252a;--hair2:#34343a;--success:#27a644;--error:#ef4444}`;
-export function renderHtml(graph:GraphV1):string{
-  const wire=graph.nodes.filter((n)=>!n.synthetic&&n.kind!=='run');const first=graph.firstBreak;const firstDiag=graph.diagnostics.find((d)=>d.code===first?.diagnosticCode&&d.sourceSeq===first?.sourceSeq);
-  const cards=[['FRAMES',wire.length],['REQUESTS',wire.filter((n)=>n.kind==='rpc_request').length],['DIAGNOSTICS',graph.diagnostics.length],['CAPTURE',graph.run.captureComplete?'COMPLETE':'INCOMPLETE']].map(([label,value])=>`<div class="metric"><span>${label}</span><strong>${value}</strong></div>`).join('');
-  const nodeMarkup=wire.length?graph.nodes.filter((n)=>n.kind!=='run').slice(0,100).map((n)=>`<article class="node ${n.synthetic?'synthetic':''} ${first?.nodeId===n.id?'first':''}" aria-label="${escapeHtml(`${n.kind} sequence ${n.sourceSeq}, ${n.status}`)}"><div class="node-kicker">SEQ ${n.sourceSeq} · ${escapeHtml(n.kind.replace('rpc_',''))}</div><code>${escapeHtml(n.method??n.toolName??n.id)}</code><div class="status">${first?.nodeId===n.id?'<b>⚠ FIRST BREAK</b> · ':''}${escapeHtml(n.status.toUpperCase())}</div></article>`).join('<span class="connector" aria-hidden="true">···›</span>'):`<div class="empty"><h2>No JSON-RPC exchanges found</h2><p>This journal contains lifecycle records only. Capture your MCP server to create causal evidence.</p><code>causalwire record -- &lt;server command&gt;</code></div>`;
-  const diagnostics=graph.diagnostics.length?graph.diagnostics.map((d)=>`<tr><td><span class="badge">${escapeHtml(d.code)}</span></td><td>${escapeHtml(d.severity)}</td><td>${escapeHtml(d.name)}</td><td>${d.sourceSeq}</td><td>${escapeHtml(d.message)}</td></tr>`).join(''):`<tr><td colspan="5" class="quiet">No diagnostics. No causal break detected.</td></tr>`;
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'"><title>Causalwire · ${escapeHtml(graph.run.id)}</title><style>${tokenCss}*{box-sizing:border-box}html{background:var(--canvas);color:var(--ink);font-family:Inter,system-ui,-apple-system,sans-serif}body{margin:0;min-width:320px}.skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;background:var(--primary);color:white;padding:12px;z-index:2}.wrap{width:min(1120px,calc(100% - 64px));margin:auto;padding:48px 0 72px}header{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:32px}.brand{font:600 13px ui-monospace,monospace;letter-spacing:.14em;color:var(--primary-hi)}h1{font-size:40px;line-height:1.15;letter-spacing:-1px;margin:8px 0 0}.meta{font:12px ui-monospace,monospace;color:var(--subtle);overflow-wrap:anywhere}.policy{border:1px solid var(--hair2);border-radius:999px;padding:8px 12px;color:var(--muted);font-size:12px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--hair);border-radius:12px;overflow:hidden;background:var(--s1);margin-bottom:24px}.metric{padding:20px 24px;border-right:1px solid var(--hair)}.metric:last-child{border:0}.metric span{display:block;color:var(--subtle);font:11px ui-monospace,monospace;letter-spacing:.1em}.metric strong{display:block;margin-top:8px;font:500 22px ui-monospace,monospace}.break{border:2px solid var(--primary);border-radius:12px;padding:20px 24px;margin:0 0 24px;background:var(--s2)}.break .label{font:700 12px ui-monospace,monospace;color:var(--primary-hi);letter-spacing:.12em}.break h2{font:500 22px/1.25 ui-monospace,monospace;margin:8px 0}.break p{color:var(--muted);margin:0}.panel{background:var(--s1);border:1px solid var(--hair);border-radius:12px;padding:24px;margin-top:24px}.panel>h2{font-size:22px;margin:0 0 6px}.panel>p{font-size:14px;color:var(--subtle);margin:0 0 24px}.graph{display:flex;align-items:center;overflow-x:auto;padding:4px 0 16px}.node{flex:0 0 180px;min-height:108px;border:1px solid var(--hair2);border-radius:10px;padding:14px;background:var(--s2)}.node.synthetic{border-style:dashed}.node.first{border:3px solid var(--primary);padding:12px}.node-kicker{font:10px ui-monospace,monospace;color:var(--subtle);margin-bottom:14px;text-transform:uppercase}.node code{display:block;overflow-wrap:anywhere;font:13px/1.4 ui-monospace,monospace}.status{font-size:11px;color:var(--muted);margin-top:16px}.status b{color:var(--primary-hi)}.connector{color:var(--tertiary);padding:0 10px}.empty{text-align:center;width:100%;padding:40px 16px}.empty h2{margin:0 0 8px}.empty p{color:var(--subtle)}.empty code{display:inline-block;padding:12px;background:var(--s2);border-radius:6px}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:var(--subtle);font-weight:500}th,td{padding:12px 8px;border-bottom:1px solid var(--hair);vertical-align:top}td:last-child{color:var(--muted)}.badge{font:600 11px ui-monospace,monospace;color:var(--primary-hi)}.quiet{color:var(--subtle)}footer{margin-top:24px;color:var(--tertiary);font-size:12px}.legend{display:flex;gap:20px;flex-wrap:wrap}.legend i{display:inline-block;width:18px;border-top:2px solid var(--hair2);margin-right:6px}.legend .broken{border-color:var(--primary);border-top-width:3px;border-top-style:dashed}@media(max-width:768px){.wrap{width:min(100% - 32px,1120px);padding-top:28px}header{display:block}.policy{display:inline-block;margin-top:16px}.metrics{grid-template-columns:repeat(2,1fr)}.metric:nth-child(2){border-right:0}.metric:nth-child(-n+2){border-bottom:1px solid var(--hair)}h1{font-size:32px}.panel{padding:16px;overflow:hidden}table{display:block;overflow-x:auto;white-space:nowrap}}@media(max-width:420px){.metrics{grid-template-columns:1fr}.metric{border-right:0;border-bottom:1px solid var(--hair)!important}.metric:last-child{border-bottom:0!important}h1{font-size:28px}.wrap{width:calc(100% - 32px)}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}</style></head><body><a class="skip" href="#main">Skip to evidence</a><main id="main" class="wrap"><header><div><div class="brand">CAUSALWIRE / LOCAL EVIDENCE</div><h1>Find the first broken edge.</h1><div class="meta">${escapeHtml(graph.run.id)} · ${escapeHtml(graph.mapping.id)}</div></div><div class="policy">CONTENT ${graph.run.contentPolicy.toUpperCase()} · ${graph.run.captureComplete?'CAPTURE COMPLETE':'CAPTURE INCOMPLETE'}</div></header><section class="metrics" aria-label="Run summary">${cards}</section>${first?`<section class="break" aria-labelledby="first-break"><div class="label">⚠ FIRST BREAK · SOURCE SEQ ${first.sourceSeq}</div><h2 id="first-break">${escapeHtml(first.diagnosticCode)} / ${escapeHtml(firstDiag?.name)}</h2><p>${escapeHtml(firstDiag?.message)}</p></section>`:''}<section class="panel" aria-labelledby="graph-title"><h2 id="graph-title">Causal graph</h2><p>Explicit JSON-RPC correlation only. Dotted connectors show chronology, not inferred causality.</p><div class="graph">${nodeMarkup}</div></section><section class="panel" aria-labelledby="diagnostics-title"><h2 id="diagnostics-title">Diagnostics</h2><p>Deterministic protocol findings, ordered by source sequence.</p><table><thead><tr><th>Code</th><th>Severity</th><th>Finding</th><th>Seq</th><th>Meaning</th></tr></thead><tbody>${diagnostics}</tbody></table></section><section class="panel legend" aria-label="Legend"><span><i></i>Observed frame</span><span><i class="broken"></i>Broken correlation</span><span>◇ Dashed node = synthetic endpoint</span></section><footer>Generated locally · Metadata only · Hashes are not redaction · No scripts, fonts, or network dependencies</footer></main></body></html>`;
+const titleCase = (value: string) => value.replaceAll('_', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
+const kindLabel = (kind: GraphNode['kind']) => kind.replace('rpc_', '').replaceAll('_', ' ');
+const nodeIdentifier = (node: GraphNode) => node.toolName ?? node.method ?? node.id;
+
+function renderSignal(graph: GraphV1, wire: GraphNode[]): string {
+  const first = graph.firstBreak;
+  const diagnostic = graph.diagnostics.find((item) => item.code === first?.diagnosticCode && item.sourceSeq === first?.sourceSeq);
+  const node = graph.nodes.find((item) => item.id === first?.nodeId);
+  if (first && diagnostic && node) {
+    return `<article class="signal break" aria-labelledby="signal-title">
+      <div class="signal-head"><span class="signal-label">First break · ${escapeHtml(diagnostic.code)}</span><span class="signal-seq">SOURCE SEQ ${first.sourceSeq}</span></div>
+      <h2 id="signal-title">${escapeHtml(titleCase(diagnostic.name))}</h2>
+      <p class="signal-message">${escapeHtml(diagnostic.message)}</p>
+      <dl class="signal-details">
+        <div><dt>Affected evidence</dt><dd>${escapeHtml(nodeIdentifier(node))}</dd></div>
+        <div><dt>Observed state</dt><dd>${escapeHtml(node.status.toUpperCase())}</dd></div>
+        <div><dt>Mapping</dt><dd>${escapeHtml(graph.mapping.id)}</dd></div>
+      </dl>
+    </article>`;
+  }
+  if (wire.length) {
+    return `<article class="signal healthy" aria-labelledby="signal-title">
+      <div class="signal-head"><span class="signal-label">No defined break</span><span class="signal-seq">${wire.length} OBSERVED FRAMES</span></div>
+      <h2 id="signal-title">Correlation completed cleanly</h2>
+      <p class="signal-message">Causalwire found no deterministic protocol break in the captured evidence.</p>
+      <dl class="signal-details">
+        <div><dt>Diagnostics</dt><dd>0 FINDINGS</dd></div>
+        <div><dt>Capture</dt><dd>${graph.run.captureComplete ? 'COMPLETE' : 'INCOMPLETE'}</dd></div>
+        <div><dt>Mapping</dt><dd>${escapeHtml(graph.mapping.id)}</dd></div>
+      </dl>
+    </article>`;
+  }
+  return `<article class="signal neutral" aria-labelledby="signal-title">
+    <div class="signal-head"><span class="signal-label">Awaiting evidence</span><span class="signal-seq">0 OBSERVED FRAMES</span></div>
+    <h2 id="signal-title">Nothing to analyze yet</h2>
+    <p class="signal-message">The journal is valid, but it only contains lifecycle records. Record an MCP stdio server to create a causal sequence.</p>
+    <dl class="signal-details">
+      <div><dt>Diagnostics</dt><dd>0 FINDINGS</dd></div>
+      <div><dt>Capture</dt><dd>${graph.run.captureComplete ? 'COMPLETE' : 'INCOMPLETE'}</dd></div>
+      <div><dt>Next command</dt><dd>causalwire record -- &lt;server&gt;</dd></div>
+    </dl>
+  </article>`;
+}
+
+function renderSummary(graph: GraphV1, wire: GraphNode[]): string {
+  const requests = wire.filter((node) => node.kind === 'rpc_request').length;
+  const capture = graph.run.captureComplete ? 'COMPLETE' : 'INCOMPLETE';
+  return `<aside class="summary" aria-labelledby="summary-title">
+    <div class="summary-head"><span>Run integrity</span><h2 id="summary-title">Evidence summary</h2></div>
+    <div class="metrics">
+      <div class="metric"><span>Frames</span><strong>${wire.length}</strong></div>
+      <div class="metric"><span>Requests</span><strong>${requests}</strong></div>
+      <div class="metric"><span>Findings</span><strong>${graph.diagnostics.length}</strong></div>
+      <div class="metric"><span>Capture</span><strong class="${graph.run.captureComplete ? 'complete' : 'incomplete'}">${capture}</strong></div>
+    </div>
+  </aside>`;
+}
+
+function renderNode(node: GraphNode, firstNodeId: string | undefined): string {
+  const first = node.id === firstNodeId;
+  const identifier = nodeIdentifier(node);
+  const secondary = node.toolName && node.method ? node.method : node.protocolVersion;
+  return `<article class="node${node.synthetic ? ' synthetic' : ''}${first ? ' first' : ''}" aria-label="${escapeHtml(`${kindLabel(node.kind)} sequence ${node.sourceSeq}, ${node.status}`)}">
+    <div class="node-top"><span class="node-kind">${escapeHtml(kindLabel(node.kind))}</span><span class="node-shape" aria-hidden="true">${node.synthetic ? '◇' : '●'}</span></div>
+    <div class="node-main"><code>${escapeHtml(identifier)}</code><span class="node-method">${escapeHtml(secondary)}</span></div>
+    <div class="node-foot"><span>SEQ ${node.sourceSeq}</span><span class="status ${escapeHtml(node.status)}">${escapeHtml(node.status)}</span></div>
+  </article>`;
+}
+
+function renderGraph(graph: GraphV1): string {
+  const visible = graph.nodes.filter((node) => node.kind !== 'run').slice(0, 100);
+  if (!visible.length) {
+    return `<div class="panel empty"><div><div class="empty-mark" aria-hidden="true">◇</div><h3>No JSON-RPC exchanges found</h3><p>This journal contains lifecycle records only. Capture an MCP server to create causal evidence.</p><code class="command">causalwire record -- &lt;server command&gt;</code></div></div>`;
+  }
+  const flow = visible.map((node, index) => {
+    const connector = index === 0 ? '' : `<span class="connector${node.id === graph.firstBreak?.nodeId ? ' broken' : ''}" aria-hidden="true">${node.id === graph.firstBreak?.nodeId ? '<em>break</em>' : ''}</span>`;
+    return `${connector}${renderNode(node, graph.firstBreak?.nodeId)}`;
+  }).join('');
+  const hidden = graph.nodes.filter((node) => node.kind !== 'run').length - visible.length;
+  return `<div class="panel">
+    <div class="graph-scroll" tabindex="0" aria-label="Causal sequence. Scroll horizontally to inspect all nodes."><div class="graph-flow">${flow}</div></div>
+    <div class="graph-foot"><div class="legend"><span><i></i>Observed</span><span><i class="broken"></i>First broken edge</span><span><i class="synthetic"></i>Synthetic endpoint</span></div><span class="scroll-hint">Scroll horizontally →</span>${hidden > 0 ? `<span>${hidden} more nodes available in JSON export</span>` : ''}</div>
+  </div>`;
+}
+
+function renderFinding(diagnostic: Diagnostic): string {
+  return `<li class="finding">
+    <span class="finding-code">${escapeHtml(diagnostic.code)}</span>
+    <div class="finding-copy"><h3>${escapeHtml(titleCase(diagnostic.name))}</h3><p>${escapeHtml(diagnostic.message)}</p></div>
+    <div class="finding-meta"><span class="${escapeHtml(diagnostic.severity)}">${escapeHtml(diagnostic.severity)}</span><span>SEQ ${diagnostic.sourceSeq}</span></div>
+  </li>`;
+}
+
+function renderDiagnostics(graph: GraphV1): string {
+  if (!graph.diagnostics.length) return '<div class="panel finding-empty"><i aria-hidden="true"></i><span>No deterministic protocol findings in this journal.</span></div>';
+  return `<div class="panel"><ol class="finding-list">${graph.diagnostics.map(renderFinding).join('')}</ol></div>`;
+}
+
+export function renderHtml(graph: GraphV1): string {
+  const wire = graph.nodes.filter((node) => !node.synthetic && node.kind !== 'run');
+  const hasBreak = Boolean(graph.firstBreak);
+  const heroTitle = hasBreak ? 'First break isolated.' : wire.length ? 'No protocol break detected.' : 'Ready for causal evidence.';
+  const heroCopy = hasBreak
+    ? 'The earliest wire-verifiable correlation failure is surfaced before downstream symptoms.'
+    : wire.length ? 'The captured sequence contains no defined correlation failure.' : 'Record MCP stdio once, then inspect the same local evidence across CLI, HTML, SVG, and OTLP.';
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'">
+  <title>Causalwire · ${escapeHtml(graph.run.id)}</title>
+  <style>${evidenceStyles}</style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to evidence</a>
+  <main id="main" class="wrap">
+    <header class="masthead">
+      <div class="identity"><span class="mark" aria-hidden="true">⌁</span><div><div class="brand">causalwire</div><div class="artifact-label">Local protocol evidence</div></div></div>
+      <div class="state-pills"><span class="pill ${graph.run.captureComplete ? 'complete' : 'incomplete'}">Capture ${graph.run.captureComplete ? 'complete' : 'incomplete'}</span><span class="pill ${graph.run.contentPolicy === 'full' ? 'full' : ''}">Content ${escapeHtml(graph.run.contentPolicy)}</span></div>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div><p class="eyebrow">Incident analysis · deterministic</p><h1 id="page-title">${heroTitle}</h1><p class="hero-copy">${heroCopy}</p></div>
+      <div class="run-ref"><span>Run / mapping</span>${escapeHtml(graph.run.id)}<br>${escapeHtml(graph.mapping.id)}</div>
+    </section>
+
+    <section class="overview" aria-label="Incident overview">${renderSignal(graph, wire)}${renderSummary(graph, wire)}</section>
+
+    <section class="evidence-section" aria-labelledby="graph-title">
+      <div class="section-heading"><span class="section-index">01</span><div><h2 id="graph-title">Causal sequence</h2><p>Explicit JSON-RPC correlation. Connectors preserve observed chronology; amber marks the first defined break.</p></div></div>
+      ${renderGraph(graph)}
+    </section>
+
+    <section class="evidence-section" aria-labelledby="diagnostics-title">
+      <div class="section-heading"><span class="section-index">02</span><div><h2 id="diagnostics-title">Deterministic findings</h2><p>Protocol findings ordered by source sequence, without semantic root-cause claims.</p></div></div>
+      ${renderDiagnostics(graph)}
+    </section>
+
+    <footer class="provenance"><strong>Generated locally by causalwire</strong><span>Metadata only · Hashes are not redaction · No scripts, fonts, analytics, or network dependencies</span></footer>
+  </main>
+</body>
+</html>`;
 }

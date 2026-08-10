@@ -7,6 +7,7 @@ colors:
   on-primary: "#ffffff"
   primary-hover: "#f59e0b"
   primary-focus: "#b45309"
+  primary-soft: "#2a1b07"
   ink: "#f7f8f8"
   ink-muted: "#d0d6e0"
   ink-subtle: "#8a8f98"
@@ -53,18 +54,27 @@ spacing: { xxs: 4px, xs: 8px, sm: 12px, md: 16px, lg: 24px, xl: 32px, xxl: 48px,
 
 ## Components
 
-- Summary card: `surface-1`, 24px padding, four responsive metric cells.
-- Diagnostic row: code badge, explicit severity text, message, and source sequence.
-- Graph node: minimum 168px wide, 12px padding, status text plus shape/icon. Synthetic nodes use dashed borders.
+- Artifact masthead: compact brand mark and evidence label on the left; capture/content pills on the right. It frames the artifact without behaving like product navigation.
+- Incident lead: a plain-language state headline followed by a two-column overview. The first-break card is primary; run metrics are supporting evidence. On mobile the first break always remains above metrics.
+- Summary card: `surface-1`, 24px padding, four compact responsive metric cells. Metrics support the diagnosis and must never visually outrank it.
+- Diagnostic finding: code badge, human-readable name and message, explicit severity, and source sequence. Findings become stacked rows on narrow screens instead of a horizontally clipped table.
+- Graph node: minimum 184px wide, 16px padding, type label, primary identifier, status text, and sequence. Synthetic nodes use dashed borders.
 - Broken edge: 3px amber stroke, dash pattern, and an adjacent `FIRST BREAK` label.
 - Empty state: centered, concise explanation and the next `record` command; never invent graph nodes.
 - Error state: actionable language without stack traces or secret-bearing values.
+
+## Layout and information priority
+
+- Reading order is masthead → incident lead → first break/run summary → causal sequence → deterministic findings → provenance footer.
+- The content cap remains 1120px. Use a 64/36 overview split on desktop and a single column below 768px.
+- Section headers pair a two-digit mono index with a concise title and one sentence of scope. Avoid dashboard-style toolbars and redundant card headings.
+- Evidence panels use borders and surface changes for separation. `primary-soft` may tint only the first-break signal; it is not a general card background.
 
 ## Responsive rules
 
 - At 1280px, content is capped at 1120px with 32px gutters.
 - At 768px, metrics wrap to two columns and graph rows may scroll horizontally inside their panel.
-- At 375px/320px, use 16px page padding, one-column metrics, wrapping metadata, and at least 44px interactive targets if controls are added.
+- At 375px/320px, use 16px page padding, two-column compact metrics, wrapping metadata, first-break-before-metrics ordering, and at least 44px interactive targets if controls are added.
 - No information may depend on hover. HTML remains legible and complete with JavaScript disabled.
 
 ## Accessibility and safety
@@ -87,3 +97,4 @@ spacing: { xxs: 4px, xs: 8px, sm: 12px, md: 16px, lg: 24px, xl: 32px, xxl: 48px,
 - Rotated the lavender primary to amber (greater than a 40-degree hue shift) to establish a distinct causal-break signal.
 - Replaced Linear Display/Text/Mono with system Inter-compatible sans and system monospace stacks so exported artifacts remain self-contained.
 - Preserved the dark surface ladder, spacing scale, restrained hairlines, compact type hierarchy, component geometry, and responsive discipline; narrowed components to the static evidence surface defined by SPEC.
+- Extended the installed system with an incident-first reading order, compact masthead, responsive finding rows, and a single `primary-soft` tint derived from the amber accent. These additions follow awesome-design-md's principle that tokens, component behavior, layout rationale, and responsive rules must be explicit rather than inferred from a screenshot.
