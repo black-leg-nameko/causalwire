@@ -24,7 +24,7 @@ const pitch = readme.indexOf('A local flight recorder for MCP');
 const demo = readme.indexOf('causalwire-demo-v2.gif');
 const quickstart = readme.indexOf('## 60-second quickstart');
 note('readme-first-viewport-order', pitch >= 0 && demo > pitch && quickstart > demo, `pitch=${pitch}, demo=${demo}, quickstart=${quickstart}`);
-note('readme-claim-boundary', readme.includes('cross-platform evidence only after') && readme.includes('does **not** sandbox'), 'cross-platform and sandbox boundaries present');
+note('readme-claim-boundary', readme.includes('public CI matrix now passes') && readme.includes('does **not** sandbox'), 'cross-platform evidence and sandbox boundaries present');
 const gifSize = statSync('artifacts/demo/causalwire-demo-v2.gif').size;
 note('demo-size', gifSize < 5 * 1024 * 1024, `${gifSize} bytes; duration is generated as 8s and recorded in launch/repo-audit.md`);
 
@@ -99,7 +99,7 @@ const report = {
   generatedAt: new Date().toISOString(),
   verdict,
   checks,
-  externalState: 'GitHub remote/settings, CI run, npm trusted publisher, social preview upload, and publication confirmation are intentionally not asserted locally.',
+  externalState: 'Public GitHub state is referenced from repository documentation; npm trusted publishing and registry publication remain external.',
 };
 mkdirSync('artifacts/repo-audit', { recursive: true });
 writeFileSync('artifacts/repo-audit/audit.json', `${JSON.stringify(report, null, 2)}\n`);

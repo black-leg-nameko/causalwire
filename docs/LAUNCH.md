@@ -48,7 +48,7 @@ All boxes must be checked by **2026-08-24 12:00 PDT / 2026-08-25 04:00 JST**. Th
 - [ ] Reddit community rules have been retrieved through an authenticated official interface or user-provided export and recorded in §6. If not, Reddit is **skipped**, not guessed.
 - [ ] One person is available to reproduce bugs, correct claims, and answer for four hours after Show HN; a second session is scheduled for the following European morning.
 
-Current local Gate C evidence is green, but the cross-platform external matrix and all public-state checks above are intentionally pending because no remote or package has been published.
+Gate C evidence and the public Node 20/22/24 × Linux/macOS/Windows matrix are green. GitHub source is public; npm publication and literal `@latest` smoke remain pending registry authentication.
 
 ## 3. Positioning and claim boundary
 
@@ -218,7 +218,7 @@ At T-3, choose **one** community only. Post only if the current rules explicitly
 These are inputs for a human-written, community-native post after rule review—not reusable promotional copy.
 
 - **Open-source community:** lead with the Apache-2.0 implementation and an architectural tradeoff; show what contribution or independent review is wanted; link only if allowed.
-- **Node community:** lead with the stdout backpressure/memory-DoS bug found during review, byte-exact regression, listener cleanup, and the still-pending real Windows/macOS CI evidence.
+- **Node community:** lead with the stdout backpressure/memory-DoS bug found during review, byte-exact regression, listener cleanup, and the green Windows/macOS/Linux CI matrix.
 - **TypeScript community:** lead with bounded streaming JSONL/frame parsing and versioned schema/normalizer design; ask for API or type-level critique rather than stars.
 - **MCP-specific community:** lead with one minimal stuck/orphan/duplicate-ID fixture and ask whether the diagnostic semantics match maintainers' real failures; make stdio-only scope prominent.
 

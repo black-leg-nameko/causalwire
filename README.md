@@ -1,10 +1,10 @@
 # causalwire
 
-> **A local flight recorder for MCP: capture stdio, find the first broken causal edge, and export the evidence to OpenTelemetry.**
+> **A local flight recorder for MCP: capture stdio, isolate the first broken causal edge, and export evidence without operating another backend.**
 
 [![CI](https://github.com/black-leg-nameko/causalwire/actions/workflows/ci.yml/badge.svg)](https://github.com/black-leg-nameko/causalwire/actions/workflows/ci.yml) [![npm](https://img.shields.io/npm/v/causalwire.svg)](https://www.npmjs.com/package/causalwire) ![Node](https://img.shields.io/badge/Node-20%20%7C%2022%20%7C%2024-339933) [![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 
-![A real causalwire demo showing D004 as the first broken edge](artifacts/demo/causalwire-demo-v2.gif)
+![Causalwire isolating D004 in a local, incident-first evidence view](artifacts/demo/causalwire-demo-v2.gif)
 
 ## 60-second quickstart
 
@@ -12,7 +12,9 @@
 npx -y causalwire@latest demo
 ```
 
-No account, API key, Docker, config file, or network backend is required. The command prints `FIRST BREAK D004` and writes a standalone HTML/SVG incident view. Before the first npm release, reproduce the same path from the packed tarball with `corepack pnpm pack:artifact && corepack pnpm smoke:pack`.
+No account, API key, Docker, config file, or network backend is required. The command prints `FIRST BREAK D004` and writes standalone HTML/SVG evidence. The incident-first view puts the earliest break and its affected tool above run metrics, then preserves the observed sequence and deterministic findings below it.
+
+Until the first npm publish completes, run the exact package path from source with `corepack pnpm pack:artifact && corepack pnpm smoke:pack`.
 
 Record a real MCP stdio server without changing its code:
 
@@ -22,7 +24,13 @@ causalwire record -- node ./dist/server.js
 
 > **Privacy boundary:** content is **off by default**, so payloads and plaintext request IDs are not journaled. Method/tool names, sizes, fingerprints, and hashes can still be sensitive metadata. A hash is not redaction or anonymization. `--content full` stores exact frame bytes and is always an explicit opt-in.
 
-causalwire sits between an MCP client and child server, forwards stdin/stdout bytes unchanged, and writes a local append-only JournalV1. Deterministic diagnostics turn that evidence into the same GraphV1 for terminal, standalone HTML/SVG, and OTLP output. No signup, backend, Docker, API key, or network telemetry is required.
+causalwire sits between an MCP client and child server, forwards stdin/stdout bytes unchanged, and writes a local append-only JournalV1. Deterministic diagnostics turn that evidence into one GraphV1 for terminal, polished standalone HTML/SVG, and OTLP output.
+
+The exported evidence view answers three questions in order:
+
+1. **Where did the first defined break occur?** The code, source sequence, affected evidence, and observed state appear together.
+2. **What happened around it?** A scroll-contained causal sequence distinguishes observed and synthetic nodes and marks the broken edge explicitly.
+3. **What can be claimed?** Findings stay wire-verifiable and clearly separated from semantic root-cause inference.
 
 ## Inspect and export
 
@@ -109,9 +117,9 @@ Current local evidence:
 - Seeded failure accuracy: **20/20 exact code + source sequence + node (100%)** across five fault families. Controls are excluded from the denominator. See [`artifacts/reports/accuracy.md`](artifacts/reports/accuracy.md).
 - Capture shadow-path benchmark: **2.402 ms maximum incremental p95**, byte mismatch/drop/reorder **0/0/0**, on Linux WSL2, Node 22.23.1, Intel i7-1165G7. See [`artifacts/reports/capture-overhead.md`](artifacts/reports/capture-overhead.md).
 - Packaged child-process benchmark: **4.207 ms maximum incremental p95**, byte mismatch **0**, on the same local Linux/Node 22 host. See [`artifacts/reports/child-process-overhead.md`](artifacts/reports/child-process-overhead.md).
-- Browser QA: Chromium at 1280/768/375 px, success and empty states, zero console errors or failed requests. See [`docs/qa-report.md`](docs/qa-report.md).
+- Browser QA: Chromium at 1280/768/375/320 px, first-break and empty states, zero page overflow, console errors, or failed requests. See [`docs/qa-report.md`](docs/qa-report.md).
 
-The shadow benchmark is an alternating in-process immediate-echo measurement, and the packaged benchmark is a sequential local OS-child echo path. Neither measures remote MCP/tool latency. Node 20/22/24 × Linux/macOS/Windows runs are configured in CI; they become cross-platform evidence only after the public workflow completes successfully.
+The shadow benchmark is an alternating in-process immediate-echo measurement, and the packaged benchmark is a sequential local OS-child echo path. Neither measures remote MCP/tool latency. The public CI matrix now passes on Node 20/22/24 across Linux, macOS, and Windows; each run preserves its own benchmark and package-smoke artifact.
 
 ## Reliability and security boundaries
 
@@ -128,7 +136,7 @@ This MVP does not proxy HTTP/A2A transports, replay side effects, enforce policy
 
 ## Roadmap
 
-- Validate the packaged Node 20/22/24 × Linux/macOS/Windows matrix in release CI.
+- Keep the public Node 20/22/24 × Linux/macOS/Windows package contract green.
 - Grow the consented MCP failure corpus and publish versioned conformance fixtures.
 - Improve protocol-version mapping without changing captured JournalV1 evidence.
 - Evaluate Streamable HTTP only after the stdio wedge meets the adoption kill criteria.
@@ -141,4 +149,4 @@ Contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), the [C
 
 ## Status and license
 
-Pre-release `0.1.0`. Licensed under [Apache-2.0](LICENSE). The package has not been published yet; release claims remain bounded by the saved local evidence and, once run, CI artifacts.
+Public pre-release `0.1.0` source. Licensed under [Apache-2.0](LICENSE). npm publication is pending registry authentication; all release claims remain bounded by linked local reports and public CI artifacts.

@@ -3,7 +3,7 @@
 - Date: 2026-08-10 (Asia/Tokyo)
 - Runtime tested: Node v22.23.1, Linux 6.18.33.2-microsoft-standard-WSL2
 - Browser tested: Playwright Chromium 151
-- Product state: launch-grade prototype; cross-platform release certification pending
+- Product state: launch-grade public source; npm publication pending registry authentication
 
 ## Outcome
 
@@ -15,9 +15,11 @@ The end-to-end core flow works from the packed npm tarball: bundled demo → fir
 |---|---:|---|
 | HTML first-break success | 1280 | pass; no overflow, console errors, or failed requests |
 | HTML first-break success | 768 | pass; metrics wrap, graph remains contained |
-| HTML first-break success | 375 | pass; single-column metrics, readable first break, no page overflow |
+| HTML first-break success | 375 | pass; incident-first stack, readable first break, no page overflow |
+| HTML first-break success | 320 | pass; state pills wrap, evidence stays contained, no page overflow |
 | HTML empty state | 1280 | pass; explains next record command, no fake nodes |
 | HTML empty state | 375 | pass; readable and contained |
+| HTML empty state | 320 | pass; readable and contained |
 | Standalone SVG success | 1280 | pass; accessible title/description, no failed requests |
 
 Machine-readable browser evidence is in `artifacts/reports/browser-qa.json`. Screenshots are in `artifacts/screenshots/`, and the README demo GIF is generated from the browser-verified artifact.
@@ -43,11 +45,11 @@ Machine-readable browser evidence is in `artifacts/reports/browser-qa.json`. Scr
 
 ## Release-gate status after repository/security hardening
 
-- **External pending:** only Linux WSL2 + Node 22 was available locally. CI and release workflows now execute Node 20/22/24 on Linux/macOS/Windows, but those live jobs must be green before cross-platform certification.
-- **Resolved locally / external matrix pending:** a packaged OS child-process benchmark now passes locally and is in every CI matrix job. The saved in-process benchmark remains a separate shadow-path measurement.
+- **Resolved publicly:** the default-branch CI matrix passes Node 20/22/24 on Linux, macOS, and Windows, including packaged child benchmarks, tarball install/demo smoke, and repository audit. Run: `31342903817`.
+- **Resolved publicly:** the packaged OS child-process benchmark passes locally and in every public CI matrix job. The saved in-process benchmark remains a separate shadow-path measurement.
 - **Resolved locally:** automated first-signal forwarding/listener cleanup, output backpressure, bounded-journal truncation, and forced ENOSPC writer tests pass. The SIGTERM process test is skipped on Windows where POSIX signal semantics do not apply; Windows exit behavior remains covered by its CI process tests.
 - A true terminal recording was not available; the supplied 8-second GIF shows the real browser evidence flow. CLI command transcripts are saved separately.
-- **Resolved locally:** repository policy/security hardening passes 30/30 automated checks, and `docs/SECURITY_REVIEW.md` records Critical 0 / High open 0. Live GitHub settings, CI, and npm trusted publishing remain user-operated external gates.
+- **Resolved locally and publicly:** repository policy/security hardening passes 30/30 automated checks, and `docs/SECURITY_REVIEW.md` records Critical 0 / High open 0. GitHub settings and public CI are active; npm authentication remains the only publication gate.
 
 ## How to reproduce
 
